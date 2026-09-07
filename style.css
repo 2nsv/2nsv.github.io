@@ -1,7 +1,7 @@
 :root {
   --bg: #05070b;
   --bg-soft: #080c13;
-  --panel: rgba(12, 17, 26, .78);
+  --panel: rgba(12,17,26,.78);
   --panel-solid: #0b1018;
 
   --text: #f4f7fb;
@@ -9,17 +9,17 @@
   --muted-2: #5f6a7a;
 
   --line: rgba(255,255,255,.09);
-  --line-strong: rgba(255,255,255,.15);
+  --line-strong: rgba(255,255,255,.16);
 
   --accent: #3b82f6;
   --accent-2: #60a5fa;
-  --accent-soft: rgba(59,130,246,.12);
-  --accent-line: rgba(59,130,246,.35);
+  --accent-soft: rgba(59,130,246,.11);
+  --accent-line: rgba(59,130,246,.38);
 
-  --shadow: 0 30px 90px rgba(0,0,0,.38);
+  --shadow: 0 30px 90px rgba(0,0,0,.4);
 
-  --radius: 24px;
   --max: 1240px;
+  --radius: 24px;
 }
 
 * {
@@ -38,13 +38,13 @@ body {
 
   background:
     radial-gradient(
-      circle at 72% 8%,
-      rgba(59,130,246,.08),
+      circle at 75% 5%,
+      rgba(59,130,246,.09),
       transparent 28%
     ),
     radial-gradient(
-      circle at 8% 45%,
-      rgba(59,130,246,.045),
+      circle at 5% 45%,
+      rgba(59,130,246,.04),
       transparent 25%
     ),
     var(--bg);
@@ -61,7 +61,6 @@ body::before {
   inset: 0;
 
   pointer-events: none;
-
   z-index: -2;
 
   opacity: .5;
@@ -87,6 +86,24 @@ body::before {
     );
 }
 
+body::after {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at center,
+      transparent 35%,
+      rgba(0,0,0,.35)
+    );
+
+  z-index: -1;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -94,42 +111,6 @@ a {
 
 button {
   font: inherit;
-}
-
-.page-noise {
-  position: fixed;
-  inset: 0;
-
-  pointer-events: none;
-
-  z-index: 100;
-
-  opacity: .025;
-
-  background-image:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
-}
-
-.cursor-glow {
-  position: fixed;
-
-  width: 340px;
-  height: 340px;
-
-  border-radius: 50%;
-
-  pointer-events: none;
-
-  z-index: -1;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(59,130,246,.10),
-      transparent 68%
-    );
-
-  transform: translate(-50%, -50%);
 }
 
 .section-shell {
@@ -143,6 +124,127 @@ button {
 
 .section {
   padding: 120px 0;
+}
+
+
+/* ================= LOADER ================= */
+
+.page-loader {
+  position: fixed;
+  inset: 0;
+
+  z-index: 999;
+
+  display: grid;
+  place-items: center;
+
+  background: var(--bg);
+
+  transition:
+    opacity .7s ease,
+    visibility .7s ease;
+}
+
+.page-loader.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-inner {
+  width: min(340px, 80vw);
+}
+
+.loader-inner span {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: var(--accent-2);
+
+  font:
+    500 9px
+    "JetBrains Mono";
+
+  letter-spacing: .16em;
+}
+
+.loader-inner strong {
+  display: block;
+
+  font:
+    600 25px
+    "JetBrains Mono";
+
+  letter-spacing: -.04em;
+}
+
+.loader-line {
+  height: 2px;
+
+  margin-top: 18px;
+
+  background: rgba(255,255,255,.08);
+
+  overflow: hidden;
+}
+
+.loader-line i {
+  display: block;
+
+  width: 0;
+  height: 100%;
+
+  background: var(--accent);
+
+  animation:
+    loader 1.5s
+    cubic-bezier(.65,0,.35,1)
+    forwards;
+}
+
+@keyframes loader {
+  to {
+    width: 100%;
+  }
+}
+
+
+/* ================= NOISE / CURSOR ================= */
+
+.page-noise {
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+
+  z-index: 1000;
+
+  opacity: .025;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+}
+
+.cursor-glow {
+  position: fixed;
+
+  width: 380px;
+  height: 380px;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  z-index: -1;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(59,130,246,.1),
+      transparent 68%
+    );
+
+  transform: translate(-50%, -50%);
 }
 
 
@@ -176,11 +278,11 @@ button {
 }
 
 .site-header.scrolled {
-  background: rgba(5,7,11,.78);
+  background: rgba(5,7,11,.8);
 
   border-color: var(--line);
 
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(20px);
 }
 
 .brand {
@@ -192,18 +294,16 @@ button {
 
   font:
     600 13px
-    "JetBrains Mono",
-    monospace;
+    "JetBrains Mono";
 
   letter-spacing: .04em;
 }
 
 .brand-mark {
-  display: grid;
-
   width: 35px;
   height: 35px;
 
+  display: grid;
   place-items: center;
 
   border: 1px solid var(--accent-line);
@@ -213,6 +313,16 @@ button {
   color: var(--accent-2);
 
   font-size: 11px;
+
+  transition: .3s ease;
+}
+
+.brand:hover .brand-mark {
+  transform: rotate(8deg);
+
+  box-shadow:
+    0 0 30px
+    rgba(59,130,246,.2);
 }
 
 .brand-text span {
@@ -232,8 +342,7 @@ button {
 
   font:
     500 11px
-    "JetBrains Mono",
-    monospace;
+    "JetBrains Mono";
 
   text-transform: uppercase;
 
@@ -282,19 +391,23 @@ button {
 /* ================= HERO ================= */
 
 .hero {
+  position: relative;
+
   min-height: 100vh;
 
-  padding-top: 120px;
+  padding-top: 115px;
 
   display: flex;
 
   flex-direction: column;
 
   justify-content: center;
+
+  overflow: visible;
 }
 
 .hero-grid {
-  min-height: 700px;
+  min-height: 690px;
 
   display: grid;
 
@@ -309,48 +422,98 @@ button {
 
 .hero-copy {
   position: relative;
-  z-index: 2;
+
+  z-index: 5;
 }
 
-.eyebrow,
-.section-kicker,
-.mini-label,
-.card-kicker {
+.eyebrow {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
   color: var(--accent-2);
 
   font:
     600 10px
-    "JetBrains Mono",
-    monospace;
+    "JetBrains Mono";
 
   letter-spacing: .16em;
+}
 
-  text-transform: uppercase;
+.status-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: var(--accent);
+
+  box-shadow:
+    0 0 0 4px
+    rgba(59,130,246,.1),
+    0 0 18px
+    rgba(59,130,246,.8);
+
+  animation:
+    pulseDot 2s
+    ease-in-out
+    infinite;
+}
+
+@keyframes pulseDot {
+  50% {
+    box-shadow:
+      0 0 0 7px
+      rgba(59,130,246,.02),
+      0 0 25px
+      rgba(59,130,246,.95);
+  }
 }
 
 .hero-name {
   margin-top: 18px;
 
+  display: flex;
+
+  flex-direction: column;
+
   font:
-    700 clamp(76px, 9.5vw, 150px)/.83
-    "Space Grotesk",
-    sans-serif;
+    700 clamp(78px, 9.5vw, 150px)/.81
+    "Space Grotesk";
 
   letter-spacing: -.075em;
 
   text-transform: uppercase;
 }
 
-.hero-name span {
+.name-line {
+  display: block;
+}
+
+.outlined {
   color: transparent;
 
   -webkit-text-stroke:
     1px
-    rgba(244,247,251,.55);
+    rgba(244,247,251,.58);
+
+  transition:
+    color .4s ease,
+    -webkit-text-stroke .4s ease;
+}
+
+.hero-name:hover .outlined {
+  color: rgba(96,165,250,.08);
+
+  -webkit-text-stroke:
+    1px
+    rgba(96,165,250,.9);
 }
 
 .hero-role {
-  margin-top: 38px;
+  margin-top: 40px;
 
   display: flex;
 
@@ -362,21 +525,38 @@ button {
 
   font:
     700 clamp(22px, 2.3vw, 34px)
-    "JetBrains Mono",
-    monospace;
+    "JetBrains Mono";
 
-  letter-spacing: .12em;
+  letter-spacing: .11em;
 }
 
 .role-line {
-  width: 62px;
+  width: 60px;
   height: 2px;
 
   background: var(--accent);
 
   box-shadow:
-    0 0 22px
+    0 0 20px
     rgba(59,130,246,.7);
+}
+
+.role-cursor {
+  width: 7px;
+  height: 24px;
+
+  background: var(--accent);
+
+  animation:
+    blink 1s
+    steps(1)
+    infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 .hero-actions {
@@ -384,7 +564,7 @@ button {
 
   gap: 14px;
 
-  margin-top: 44px;
+  margin-top: 45px;
 }
 
 .btn {
@@ -405,9 +585,8 @@ button {
     var(--line-strong);
 
   font:
-    700 14px
-    "JetBrains Mono",
-    monospace;
+    700 13px
+    "JetBrains Mono";
 
   letter-spacing: .03em;
 
@@ -420,6 +599,14 @@ button {
 
 .btn i {
   font-size: 20px;
+
+  transition:
+    transform .25s ease;
+}
+
+.btn:hover i {
+  transform:
+    translate(3px,-3px);
 }
 
 .btn-primary {
@@ -427,18 +614,16 @@ button {
 
   border-color: var(--accent);
 
-  color: #fff;
+  color: white;
 
   box-shadow:
-    0 12px 38px
-    rgba(59,130,246,.22);
+    0 14px 45px
+    rgba(59,130,246,.2);
 }
 
 .btn-primary:hover {
-  transform: translateY(-4px);
-
   box-shadow:
-    0 18px 48px
+    0 20px 55px
     rgba(59,130,246,.34);
 }
 
@@ -449,8 +634,6 @@ button {
 }
 
 .btn-secondary:hover {
-  transform: translateY(-4px);
-
   border-color: var(--accent-line);
 
   background: var(--accent-soft);
@@ -464,26 +647,77 @@ button {
 
   height: 680px;
 
-  perspective: 1200px;
+  perspective: 1300px;
 
   transform-style: preserve-3d;
+
+  isolation: isolate;
+}
+
+.hero-particles {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+}
+
+.hero-particle {
+  position: absolute;
+
+  width: 2px;
+  height: 2px;
+
+  background: var(--accent-2);
+
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 12px
+    rgba(59,130,246,.8);
+
+  animation:
+    particleFloat
+    var(--duration)
+    ease-in-out
+    infinite
+    alternate;
+}
+
+@keyframes particleFloat {
+  from {
+    transform:
+      translate3d(0,0,0);
+    opacity: .2;
+  }
+
+  to {
+    transform:
+      translate3d(
+        var(--x),
+        var(--y),
+        0
+      );
+
+    opacity: .9;
+  }
 }
 
 .visual-grid {
   position: absolute;
 
-  inset: 15% 5% 10%;
+  inset: 12% 3% 9%;
 
-  opacity: .35;
+  opacity: .38;
 
   background-image:
     linear-gradient(
-      rgba(59,130,246,.16) 1px,
+      rgba(59,130,246,.17) 1px,
       transparent 1px
     ),
     linear-gradient(
       90deg,
-      rgba(59,130,246,.16) 1px,
+      rgba(59,130,246,.17) 1px,
       transparent 1px
     );
 
@@ -511,27 +745,36 @@ button {
 
   border-radius: 50%;
 
-  opacity: .65;
+  opacity: .6;
+
+  transition:
+    transform .2s ease-out;
 }
 
 .orbit-one {
-  width: 520px;
-  height: 520px;
+  width: 530px;
+  height: 530px;
 
-  top: 75px;
+  top: 72px;
   left: 50%;
 
   transform:
     translateX(-50%)
     rotate(28deg)
     skewX(8deg);
+
+  animation:
+    orbitRotateOne
+    18s
+    linear
+    infinite;
 }
 
 .orbit-two {
-  width: 420px;
-  height: 590px;
+  width: 425px;
+  height: 600px;
 
-  top: 42px;
+  top: 36px;
   left: 50%;
 
   transform:
@@ -541,12 +784,69 @@ button {
 
   border-color:
     rgba(96,165,250,.18);
+
+  animation:
+    orbitRotateTwo
+    23s
+    linear
+    infinite
+    reverse;
 }
+
+.orbit-three {
+  width: 610px;
+  height: 280px;
+
+  top: 210px;
+  left: 50%;
+
+  transform:
+    translateX(-50%)
+    rotate(-8deg);
+
+  border-color:
+    rgba(59,130,246,.12);
+
+  animation:
+    orbitRotateThree
+    28s
+    linear
+    infinite;
+}
+
+@keyframes orbitRotateOne {
+  to {
+    transform:
+      translateX(-50%)
+      rotate(388deg)
+      skewX(8deg);
+  }
+}
+
+@keyframes orbitRotateTwo {
+  to {
+    transform:
+      translateX(-50%)
+      rotate(325deg)
+      skewX(-7deg);
+  }
+}
+
+@keyframes orbitRotateThree {
+  to {
+    transform:
+      translateX(-50%)
+      rotate(352deg);
+  }
+}
+
+
+/* ================= HERO PHOTO ================= */
 
 .hero-photo {
   position: absolute;
 
-  width: min(440px, 76%);
+  width: min(435px, 76%);
 
   aspect-ratio: .76;
 
@@ -554,14 +854,16 @@ button {
   left: 50%;
 
   transform:
-    translate(-50%, -50%)
-    rotateY(-7deg)
-    rotateX(3deg);
+    translate(-50%,-50%)
+    rotateY(-8deg)
+    rotateX(4deg);
 
   transform-style: preserve-3d;
 
   transition:
-    transform .16s ease-out;
+    transform .12s ease-out;
+
+  z-index: 3;
 }
 
 .photo-glow {
@@ -572,10 +874,25 @@ button {
   background:
     rgba(59,130,246,.25);
 
-  filter: blur(65px);
+  filter: blur(70px);
 
   transform:
-    translateZ(-50px);
+    translateZ(-70px);
+
+  animation:
+    photoGlow 4s
+    ease-in-out
+    infinite;
+}
+
+@keyframes photoGlow {
+  50% {
+    opacity: .55;
+
+    transform:
+      translateZ(-70px)
+      scale(1.08);
+  }
 }
 
 .photo-frame {
@@ -598,30 +915,30 @@ button {
     rgba(255,255,255,.2);
 
   box-shadow:
-    0 35px 90px
-    rgba(0,0,0,.55),
+    0 40px 100px
+    rgba(0,0,0,.6),
     inset 0 0 0 1px
-    rgba(59,130,246,.16);
+    rgba(59,130,246,.17);
 
   overflow: hidden;
 
   backdrop-filter: blur(8px);
 }
 
-.photo-frame::before {
+.photo-frame::after {
   content: "";
 
   position: absolute;
 
   inset: 14px;
 
-  z-index: 1;
+  border:
+    1px solid
+    rgba(255,255,255,.08);
 
   pointer-events: none;
 
-  border:
-    1px solid
-    rgba(59,130,246,.22);
+  z-index: 5;
 }
 
 .photo-frame img {
@@ -633,8 +950,91 @@ button {
   display: block;
 
   filter:
-    saturate(.92)
-    contrast(1.04);
+    saturate(.9)
+    contrast(1.06);
+
+  transition:
+    transform .8s ease,
+    filter .5s ease;
+}
+
+.hero-photo:hover .photo-frame img {
+  transform: scale(1.035);
+
+  filter:
+    saturate(1)
+    contrast(1.07);
+}
+
+.photo-overlay {
+  position: absolute;
+
+  inset: 14px;
+
+  z-index: 2;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(59,130,246,.13),
+      transparent 38%,
+      transparent 65%,
+      rgba(59,130,246,.08)
+    );
+}
+
+.scan-line {
+  position: absolute;
+
+  left: 14px;
+  right: 14px;
+
+  top: 0;
+
+  height: 2px;
+
+  z-index: 8;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--accent),
+      transparent
+    );
+
+  box-shadow:
+    0 0 18px
+    rgba(59,130,246,.7);
+
+  animation:
+    scan 4s
+    linear
+    infinite;
+}
+
+@keyframes scan {
+  0% {
+    transform:
+      translateY(0);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    transform:
+      translateY(630px);
+    opacity: 0;
+  }
 }
 
 .photo-top,
@@ -644,7 +1044,7 @@ button {
   left: 28px;
   right: 28px;
 
-  z-index: 3;
+  z-index: 7;
 
   display: flex;
 
@@ -652,8 +1052,7 @@ button {
 
   font:
     600 9px
-    "JetBrains Mono",
-    monospace;
+    "JetBrains Mono";
 
   letter-spacing: .15em;
 }
@@ -671,100 +1070,76 @@ button {
   color: var(--accent-2);
 }
 
-
-/* ================= FLOATING CHIPS ================= */
-
-.floating-chip {
+.photo-corner {
   position: absolute;
 
-  z-index: 5;
+  width: 28px;
+  height: 28px;
 
-  display: flex;
+  z-index: 8;
 
-  align-items: center;
+  pointer-events: none;
+}
 
-  gap: 9px;
+.corner-tl {
+  top: 21px;
+  left: 21px;
 
-  padding: 11px 14px;
-
-  border:
+  border-top:
     1px solid
-    var(--accent-line);
+    var(--accent);
 
-  background:
-    rgba(7,11,18,.86);
-
-  box-shadow:
-    0 16px 38px
-    rgba(0,0,0,.28);
-
-  backdrop-filter: blur(14px);
-
-  color: var(--text);
-
-  font:
-    600 10px
-    "JetBrains Mono",
-    monospace;
-
-  letter-spacing: .06em;
+  border-left:
+    1px solid
+    var(--accent);
 }
 
-.floating-chip i {
-  color: var(--accent-2);
-  font-size: 18px;
+.corner-tr {
+  top: 21px;
+  right: 21px;
+
+  border-top:
+    1px solid
+    var(--accent);
+
+  border-right:
+    1px solid
+    var(--accent);
 }
 
-.chip-sql {
-  top: 17%;
-  left: 2%;
+.corner-bl {
+  bottom: 21px;
+  left: 21px;
 
-  animation:
-    floatA 5s
-    ease-in-out
-    infinite;
+  border-bottom:
+    1px solid
+    var(--accent);
+
+  border-left:
+    1px solid
+    var(--accent);
 }
 
-.chip-python {
-  right: 0;
-  top: 33%;
+.corner-br {
+  bottom: 21px;
+  right: 21px;
 
-  animation:
-    floatB 6s
-    ease-in-out
-    infinite;
-}
+  border-bottom:
+    1px solid
+    var(--accent);
 
-.chip-cloud {
-  left: 8%;
-  bottom: 15%;
-
-  animation:
-    floatA 6.5s
-    ease-in-out
-    infinite
-    reverse;
-}
-
-@keyframes floatA {
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
-@keyframes floatB {
-  50% {
-    transform: translateY(13px);
-  }
+  border-right:
+    1px solid
+    var(--accent);
 }
 
 
-/* ================= NODES ================= */
+/* ================= DATA NODES ================= */
 
 .data-node {
   position: absolute;
 
-  z-index: 4;
+  z-index: 6;
 
   width: 9px;
   height: 9px;
@@ -776,8 +1151,14 @@ button {
   border-radius: 50%;
 
   box-shadow:
-    0 0 18px
+    0 0 20px
     rgba(59,130,246,.8);
+
+  animation:
+    nodePulse
+    2.7s
+    ease-in-out
+    infinite;
 }
 
 .data-node span {
@@ -794,26 +1175,282 @@ button {
 }
 
 .node-one {
-  top: 20%;
-  right: 17%;
+  top: 19%;
+  right: 16%;
 }
 
 .node-two {
-  bottom: 22%;
-  right: 12%;
+  bottom: 20%;
+  right: 11%;
+
+  animation-delay: .6s;
 }
 
 .node-three {
-  top: 60%;
-  left: 8%;
+  top: 59%;
+  left: 7%;
+
+  animation-delay: 1.1s;
 }
 
-.hero-bottom-line {
+.node-four {
+  top: 28%;
+  left: 14%;
+
+  animation-delay: 1.7s;
+}
+
+@keyframes nodePulse {
+  50% {
+    transform: scale(1.8);
+
+    opacity: .45;
+  }
+}
+
+
+/* ================= CONNECTIONS ================= */
+
+.hero-connections {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+
+  pointer-events: none;
+
+  overflow: visible;
+}
+
+.hero-connections path {
+  fill: none;
+
+  stroke:
+    rgba(59,130,246,.28);
+
+  stroke-width: 1;
+
+  stroke-dasharray: 4 8;
+
+  animation:
+    dashFlow
+    8s
+    linear
+    infinite;
+}
+
+.hero-connections path:nth-child(2) {
+  animation-delay: -2s;
+}
+
+.hero-connections path:nth-child(3) {
+  animation-delay: -4s;
+}
+
+.hero-connections path:nth-child(4) {
+  animation-delay: -6s;
+}
+
+@keyframes dashFlow {
+  to {
+    stroke-dashoffset: -120;
+  }
+}
+
+
+/* ================= FLOATING CHIPS ================= */
+
+.floating-chip {
+  position: absolute;
+
+  z-index: 10;
+
   display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  min-width: 105px;
+
+  padding: 11px 13px;
+
+  border:
+    1px solid
+    var(--accent-line);
+
+  background:
+    rgba(7,11,18,.87);
+
+  box-shadow:
+    0 16px 38px
+    rgba(0,0,0,.3);
+
+  backdrop-filter: blur(14px);
+
+  color: var(--text);
+
+  font:
+    600 10px
+    "JetBrains Mono";
+
+  letter-spacing: .06em;
+
+  transition:
+    border-color .3s ease,
+    background .3s ease,
+    box-shadow .3s ease;
+}
+
+.floating-chip:hover {
+  border-color: var(--accent);
+
+  background:
+    rgba(13,24,40,.95);
+
+  box-shadow:
+    0 18px 45px
+    rgba(59,130,246,.16);
+}
+
+.floating-chip i {
+  color: var(--accent-2);
+
+  font-size: 18px;
+}
+
+.floating-chip b {
+  margin-left: auto;
+
+  color: var(--muted-2);
+
+  font:
+    500 8px
+    "JetBrains Mono";
+}
+
+.chip-sql {
+  top: 15%;
+  left: 1%;
+
+  animation:
+    floatA
+    5s
+    ease-in-out
+    infinite;
+}
+
+.chip-python {
+  right: -1%;
+  top: 33%;
+
+  animation:
+    floatB
+    6s
+    ease-in-out
+    infinite;
+}
+
+.chip-cloud {
+  left: 7%;
+  bottom: 14%;
+
+  animation:
+    floatA
+    6.5s
+    ease-in-out
+    infinite
+    reverse;
+}
+
+@keyframes floatA {
+  50% {
+    transform:
+      translateY(-13px);
+  }
+}
+
+@keyframes floatB {
+  50% {
+    transform:
+      translateY(13px);
+  }
+}
+
+
+/* ================= DATA LABELS ================= */
+
+.data-label {
+  position: absolute;
+
+  z-index: 7;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+
+  padding: 8px 10px;
+
+  border-left:
+    1px solid
+    var(--accent);
+
+  background:
+    rgba(5,8,13,.7);
+
+  font:
+    500 8px
+    "JetBrains Mono";
+
+  letter-spacing: .1em;
+
+  backdrop-filter: blur(10px);
+}
+
+.data-label span {
+  color: var(--muted-2);
+}
+
+.data-label strong {
+  color: var(--accent-2);
+
+  font-size: 9px;
+}
+
+.label-top {
+  right: 5%;
+  top: 8%;
+}
+
+.label-bottom {
+  left: 5%;
+  bottom: 6%;
+}
+
+
+/* ================= HERO BOTTOM ================= */
+
+.hero-bottom-line {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
 
   justify-content: space-between;
 
-  padding: 24px 0 0;
+  gap: 15px;
+
+  padding:
+    24px
+    0
+    0;
 
   border-top:
     1px solid
@@ -823,10 +1460,32 @@ button {
 
   font:
     500 9px
-    "JetBrains Mono",
-    monospace;
+    "JetBrains Mono";
 
   letter-spacing: .15em;
+}
+
+.scroll-indicator {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: var(--accent-2);
+
+  animation:
+    scrollHint
+    2s
+    ease-in-out
+    infinite;
+}
+
+@keyframes scrollHint {
+  50% {
+    transform:
+      translateY(4px);
+  }
 }
 
 
@@ -849,8 +1508,7 @@ button {
 
   font:
     600 clamp(44px, 6vw, 82px)/.95
-    "Space Grotesk",
-    sans-serif;
+    "Space Grotesk";
 
   letter-spacing: -.055em;
 }
@@ -864,8 +1522,7 @@ button {
 
   font:
     500 10px/1.6
-    "JetBrains Mono",
-    monospace;
+    "JetBrains Mono";
 
   text-align: right;
 
@@ -896,9 +1553,13 @@ button {
 .about-intro,
 .about-copy,
 .about-focus {
+  position: relative;
+
   background: var(--panel-solid);
 
   padding: 46px;
+
+  overflow: hidden;
 }
 
 .about-intro {
@@ -910,7 +1571,7 @@ button {
 
   justify-content: space-between;
 
-  min-height: 430px;
+  min-height: 440px;
 }
 
 .about-index {
@@ -918,17 +1579,33 @@ button {
 
   font:
     500 12px
-    "JetBrains Mono",
-    monospace;
+    "JetBrains Mono";
+}
+
+.large-symbol {
+  position: absolute;
+
+  right: 35px;
+  top: 25px;
+
+  color:
+    rgba(59,130,246,.055);
+
+  font:
+    700 120px
+    "JetBrains Mono";
+
+  pointer-events: none;
 }
 
 .about-intro h3 {
+  position: relative;
+
   max-width: 560px;
 
   font:
     600 clamp(32px, 4vw, 54px)/1.05
-    "Space Grotesk",
-    sans-serif;
+    "Space Grotesk";
 
   letter-spacing: -.045em;
 }
@@ -973,10 +1650,64 @@ button {
 
   font:
     500 10px
-    "JetBrains Mono",
-    monospace;
+    "JetBrains Mono";
 
   text-transform: uppercase;
+
+  transition:
+    border-color .25s ease,
+    color .25s ease,
+    background .25s ease;
+}
+
+.focus-tags span:hover,
+.tag-row span:hover {
+  color: var(--accent-2);
+
+  border-color:
+    var(--accent-line);
+
+  background:
+    var(--accent-soft);
+}
+
+
+/* ================= INTERACTIVE CARDS ================= */
+
+.interactive-card {
+  position: relative;
+
+  transform-style: preserve-3d;
+
+  transition:
+    transform .18s ease,
+    border-color .3s ease,
+    background .3s ease;
+}
+
+.card-shine {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0;
+
+  background:
+    radial-gradient(
+      350px circle at
+      var(--mouse-x,50%)
+      var(--mouse-y,50%),
+      rgba(59,130,246,.11),
+      transparent 45%
+    );
+
+  transition: opacity .3s ease;
+}
+
+.interactive-card:hover .card-shine {
+  opacity: 1;
 }
 
 
@@ -1008,6 +1739,13 @@ button {
     );
 
   box-shadow: var(--shadow);
+
+  overflow: hidden;
+}
+
+.education-card:hover {
+  border-color:
+    var(--accent-line);
 }
 
 .education-year {
@@ -1015,8 +1753,7 @@ button {
 
   font:
     600 13px
-    "JetBrains Mono",
-    monospace;
+    "JetBrains Mono";
 }
 
 .education-main h3 {
@@ -1024,8 +1761,7 @@ button {
 
   font:
     600 40px/1
-    "Space Grotesk",
-    sans-serif;
+    "Space Grotesk";
 
   letter-spacing: -.035em;
 }
@@ -1043,8 +1779,7 @@ button {
 
   font:
     500 9px/1.6
-    "JetBrains Mono",
-    monospace;
+    "JetBrains Mono";
 
   letter-spacing: .1em;
 }
@@ -1068,13 +1803,13 @@ button {
   display: grid;
 
   grid-template-columns:
-    repeat(2, 1fr);
+    repeat(2,1fr);
 
   gap: 14px;
 }
 
 .skill-group {
-  min-height: 270px;
+  min-height: 275px;
 
   padding: 30px;
 
@@ -1085,12 +1820,10 @@ button {
   background:
     rgba(10,14,22,.72);
 
-  transition: .3s ease;
+  overflow: hidden;
 }
 
 .skill-group:hover {
-  transform: translateY(-5px);
-
   border-color:
     var(--accent-line);
 
@@ -1099,6 +1832,8 @@ button {
 }
 
 .skill-head {
+  position: relative;
+
   display: flex;
 
   align-items: center;
@@ -1112,7 +1847,7 @@ button {
     var(--line);
 }
 
-.skill-head span {
+.skill-head > span {
   color: var(--accent);
 
   font:
@@ -1126,7 +1861,27 @@ button {
     "Space Grotesk";
 }
 
+.skill-head > i {
+  margin-left: auto;
+
+  color:
+    rgba(96,165,250,.8);
+
+  font-size: 23px;
+
+  transition:
+    transform .4s ease;
+}
+
+.skill-group:hover .skill-head > i {
+  transform:
+    rotate(15deg)
+    scale(1.15);
+}
+
 .tech-grid {
+  position: relative;
+
   display: flex;
 
   flex-wrap: wrap;
@@ -1134,6 +1889,8 @@ button {
   gap: 9px;
 
   padding-top: 25px;
+
+  z-index: 2;
 }
 
 .tech {
@@ -1153,7 +1910,11 @@ button {
 
   font-size: 12px;
 
-  transition: .25s ease;
+  transition:
+    color .25s ease,
+    border-color .25s ease,
+    transform .25s ease,
+    background .25s ease;
 }
 
 .tech:hover {
@@ -1164,6 +1925,9 @@ button {
 
   background:
     var(--accent-soft);
+
+  transform:
+    translateY(-3px);
 }
 
 .tech i {
@@ -1191,7 +1955,13 @@ button {
 
   width: 1px;
 
-  background: var(--line);
+  background:
+    linear-gradient(
+      to bottom,
+      var(--accent-line),
+      var(--line),
+      transparent
+    );
 }
 
 .timeline-item {
@@ -1236,6 +2006,19 @@ button {
   font:
     500 10px
     "JetBrains Mono";
+
+  transition:
+    background .3s ease,
+    box-shadow .3s ease;
+}
+
+.timeline-item:hover .timeline-marker {
+  background:
+    var(--accent-soft);
+
+  box-shadow:
+    0 0 30px
+    rgba(59,130,246,.15);
 }
 
 .timeline-date {
@@ -1250,14 +2033,22 @@ button {
 
 .timeline-content {
   padding:
-    0
-    0
-    10px
+    30px
     35px;
 
-  border-left:
+  border:
     1px solid
     var(--line);
+
+  background:
+    rgba(10,14,22,.6);
+
+  overflow: hidden;
+}
+
+.timeline-content:hover {
+  border-color:
+    var(--accent-line);
 }
 
 .timeline-content h3 {
@@ -1289,6 +2080,46 @@ button {
   margin-top: 20px;
 }
 
+.timeline-progress {
+  width: 100%;
+
+  height: 1px;
+
+  margin-top: 30px;
+
+  background:
+    rgba(255,255,255,.05);
+
+  overflow: hidden;
+}
+
+.timeline-progress span {
+  display: block;
+
+  width: 40%;
+
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--accent),
+      transparent
+    );
+
+  animation:
+    progressMove
+    4s
+    ease-in-out
+    infinite alternate;
+}
+
+@keyframes progressMove {
+  to {
+    width: 75%;
+  }
+}
+
 
 /* ================= SERVICES ================= */
 
@@ -1296,7 +2127,7 @@ button {
   display: grid;
 
   grid-template-columns:
-    repeat(3, 1fr);
+    repeat(3,1fr);
 
   gap: 1px;
 
@@ -1310,22 +2141,28 @@ button {
 .service-card {
   position: relative;
 
-  min-height: 270px;
+  min-height: 290px;
 
   padding: 28px;
 
   background: var(--panel-solid);
 
   overflow: hidden;
-
-  transition: .3s ease;
 }
 
 .service-card:hover {
   background: #0d1420;
 }
 
-.service-card > span {
+.service-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+}
+
+.service-top > span {
   color: var(--accent);
 
   font:
@@ -1333,19 +2170,34 @@ button {
     "JetBrains Mono";
 }
 
-.service-card > i {
-  position: absolute;
+.service-top > i {
+  color:
+    rgba(96,165,250,.8);
 
-  top: 28px;
-  right: 28px;
+  font-size: 20px;
+}
 
-  color: rgba(96,165,250,.8);
+.service-icon {
+  margin-top: 38px;
+
+  color:
+    rgba(96,165,250,.9);
 
   font-size: 29px;
+
+  transition:
+    transform .4s ease;
+}
+
+.service-card:hover .service-icon {
+  transform:
+    translateY(-4px)
+    rotate(-6deg)
+    scale(1.08);
 }
 
 .service-card h3 {
-  margin-top: 68px;
+  margin-top: 16px;
 
   font:
     600 24px
@@ -1355,11 +2207,47 @@ button {
 }
 
 .service-card p {
-  margin-top: 12px;
+  max-width: 340px;
+
+  margin-top: 10px;
 
   color: var(--muted);
 
   font-size: 13px;
+}
+
+.service-arrow {
+  position: absolute;
+
+  right: 28px;
+  bottom: 25px;
+
+  width: 35px;
+  height: 35px;
+
+  display: grid;
+  place-items: center;
+
+  border:
+    1px solid
+    var(--line);
+
+  color: var(--muted);
+
+  transition:
+    color .25s ease,
+    border-color .25s ease,
+    transform .25s ease;
+}
+
+.service-card:hover .service-arrow {
+  color: var(--accent-2);
+
+  border-color:
+    var(--accent-line);
+
+  transform:
+    translate(3px,-3px);
 }
 
 
@@ -1375,7 +2263,7 @@ button {
     1.05fr
     .95fr;
 
-  min-height: 540px;
+  min-height: 550px;
 
   overflow: hidden;
 
@@ -1391,6 +2279,11 @@ button {
     );
 
   box-shadow: var(--shadow);
+}
+
+.project-card:hover {
+  border-color:
+    var(--accent-line);
 }
 
 .project-number {
@@ -1413,6 +2306,10 @@ button {
     40px
     50px
     10px;
+
+  position: relative;
+
+  z-index: 4;
 }
 
 .project-meta {
@@ -1479,6 +2376,18 @@ button {
   font:
     500 10px
     "JetBrains Mono";
+
+  transition: .25s ease;
+}
+
+.project-stack span:hover {
+  color: var(--accent-2);
+
+  border-color:
+    var(--accent-line);
+
+  background:
+    var(--accent-soft);
 }
 
 .project-stack i {
@@ -1507,6 +2416,13 @@ button {
   font:
     600 12px
     "JetBrains Mono";
+
+  transition:
+    color .25s ease;
+}
+
+.project-link:hover {
+  color: var(--accent-2);
 }
 
 .project-link i {
@@ -1529,7 +2445,7 @@ button {
 .project-visual {
   position: relative;
 
-  min-height: 540px;
+  min-height: 550px;
 
   border-left:
     1px solid
@@ -1540,7 +2456,7 @@ button {
   background:
     radial-gradient(
       circle at 50% 48%,
-      rgba(59,130,246,.16),
+      rgba(59,130,246,.17),
       transparent 34%
     ),
     linear-gradient(
@@ -1579,6 +2495,21 @@ button {
   box-shadow:
     0 0 70px
     rgba(59,130,246,.15);
+
+  animation:
+    databaseFloat
+    4.5s
+    ease-in-out
+    infinite;
+}
+
+@keyframes databaseFloat {
+  50% {
+    transform:
+      translate(-50%,-54%)
+      rotateX(12deg)
+      rotateY(-12deg);
+  }
 }
 
 .db-top,
@@ -1639,7 +2570,7 @@ button {
     var(--accent-line);
 
   background:
-    rgba(5,9,15,.85);
+    rgba(5,9,15,.88);
 
   color: var(--accent-2);
 
@@ -1648,21 +2579,40 @@ button {
     "JetBrains Mono";
 
   letter-spacing: .1em;
+
+  animation:
+    labelFloat
+    4s
+    ease-in-out
+    infinite;
+}
+
+@keyframes labelFloat {
+  50% {
+    transform:
+      translateY(-5px);
+  }
 }
 
 .label-a {
   top: 25%;
-  left: 18%;
+  left: 17%;
 }
 
 .label-b {
   top: 55%;
   right: 13%;
+
+  animation-delay:
+    -1.2s;
 }
 
 .label-c {
   bottom: 20%;
   left: 27%;
+
+  animation-delay:
+    -2.3s;
 }
 
 .connector {
@@ -1678,26 +2628,98 @@ button {
       var(--accent),
       transparent
     );
+
+  transform-origin: left;
+
+  animation:
+    connectorPulse
+    2.5s
+    ease-in-out
+    infinite;
 }
 
 .connector-a {
   top: 29%;
   left: 30%;
 
-  transform: rotate(24deg);
+  transform:
+    rotate(24deg);
 }
 
 .connector-b {
   top: 59%;
   right: 29%;
 
-  transform: rotate(-20deg);
+  transform:
+    rotate(-20deg);
+}
+
+.connector-c {
+  left: 32%;
+  bottom: 25%;
+
+  transform:
+    rotate(-12deg);
+
+  animation-delay:
+    -.8s;
+}
+
+@keyframes connectorPulse {
+  50% {
+    opacity: .35;
+  }
+}
+
+.database-pulse {
+  position: absolute;
+
+  width: 340px;
+  height: 340px;
+
+  top: 50%;
+  left: 50%;
+
+  border:
+    1px solid
+    rgba(59,130,246,.14);
+
+  border-radius: 50%;
+
+  transform:
+    translate(-50%,-50%);
+
+  animation:
+    pulseRing
+    3.5s
+    ease-out
+    infinite;
+}
+
+@keyframes pulseRing {
+  0% {
+    opacity: .8;
+
+    transform:
+      translate(-50%,-50%)
+      scale(.6);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(-50%,-50%)
+      scale(1.3);
+  }
 }
 
 
 /* ================= CONTACT ================= */
 
 .contact-card {
+  position: relative;
+
   display: grid;
 
   grid-template-columns:
@@ -1723,6 +2745,14 @@ button {
   box-shadow:
     0 30px 100px
     rgba(0,0,0,.35);
+
+  overflow: hidden;
+}
+
+.contact-copy {
+  position: relative;
+
+  z-index: 2;
 }
 
 .contact-copy h2 {
@@ -1751,7 +2781,42 @@ button {
   color: var(--muted);
 }
 
+.contact-status {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  margin-top: 28px;
+
+  color: var(--muted);
+
+  font:
+    500 9px
+    "JetBrains Mono";
+
+  letter-spacing: .1em;
+}
+
+.contact-status span {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--accent);
+
+  box-shadow:
+    0 0 14px
+    rgba(59,130,246,.8);
+}
+
 .contact-links {
+  position: relative;
+
+  z-index: 2;
+
   display: flex;
 
   flex-direction: column;
@@ -1774,7 +2839,9 @@ button {
     1px solid
     var(--line);
 
-  transition: .25s ease;
+  transition:
+    padding .25s ease,
+    border-color .25s ease;
 }
 
 .contact-link:hover {
@@ -1812,6 +2879,37 @@ button {
   font-size: 20px;
 }
 
+.contact-grid {
+  position: absolute;
+
+  inset: 0;
+
+  opacity: .25;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(59,130,246,.08) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(59,130,246,.08) 1px,
+      transparent 1px
+    );
+
+  background-size: 40px 40px;
+
+  mask-image:
+    linear-gradient(
+      90deg,
+      transparent,
+      black,
+      transparent
+    );
+}
+
 
 /* ================= FOOTER ================= */
 
@@ -1843,11 +2941,12 @@ button {
   opacity: 0;
 
   transform:
-    translateY(28px);
+    translateY(35px);
 
   transition:
-    opacity .7s ease,
-    transform .7s ease;
+    opacity .8s ease,
+    transform .8s
+    cubic-bezier(.2,.7,.2,1);
 }
 
 .reveal.in-view {
@@ -1857,32 +2956,7 @@ button {
 }
 
 
-/* ================= REDUCED MOTION ================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-
-    transition: none !important;
-  }
-
-  .reveal {
-    opacity: 1;
-
-    transform: none;
-  }
-
-}
-
-
-/* ================= TABLET ================= */
+/* ================= RESPONSIVE ================= */
 
 @media (max-width: 1050px) {
 
@@ -1906,7 +2980,7 @@ button {
   }
 
   .hero-visual {
-    height: 600px;
+    height: 610px;
   }
 
   .services-grid {
@@ -1924,7 +2998,7 @@ button {
     grid-column:
       1 / -1;
 
-    min-height: 360px;
+    min-height: 380px;
 
     border-left: 0;
 
@@ -1936,7 +3010,7 @@ button {
 }
 
 
-/* ================= MOBILE NAV ================= */
+/* ================= MOBILE ================= */
 
 @media (max-width: 860px) {
 
@@ -1986,8 +3060,7 @@ button {
     width: 17px;
     height: 1px;
 
-    background:
-      currentColor;
+    background: currentColor;
 
     transition: .25s ease;
   }
@@ -2023,12 +3096,11 @@ button {
       var(--line);
 
     background:
-      rgba(7,10,16,.96);
+      rgba(7,10,16,.97);
 
     backdrop-filter: blur(18px);
 
     opacity: 0;
-
     visibility: hidden;
 
     transform:
@@ -2039,7 +3111,6 @@ button {
 
   .mobile-menu.open {
     opacity: 1;
-
     visibility: visible;
 
     transform: none;
@@ -2077,7 +3148,7 @@ button {
 
     min-height: auto;
 
-    gap: 35px;
+    gap: 25px;
   }
 
   .hero-copy {
@@ -2100,7 +3171,7 @@ button {
   }
 
   .hero-role {
-    font-size: 22px;
+    font-size: 21px;
   }
 
   .hero-bottom-line {
@@ -2132,7 +3203,7 @@ button {
   .about-intro {
     grid-row: auto;
 
-    min-height: 310px;
+    min-height: 330px;
   }
 
 
@@ -2166,10 +3237,6 @@ button {
 
   .timeline-content {
     grid-column: 2;
-
-    padding-left: 0;
-
-    border-left: 0;
   }
 
   .timeline-marker {
@@ -2204,13 +3271,18 @@ button {
   }
 
   .hero-role {
-    font-size: 16px;
+    font-size: 15px;
 
-    letter-spacing: .08em;
+    letter-spacing: .07em;
   }
 
   .role-line {
-    width: 38px;
+    width: 36px;
+  }
+
+  .role-cursor {
+    height: 18px;
+    width: 5px;
   }
 
   .hero-actions {
@@ -2226,7 +3298,7 @@ button {
   }
 
   .hero-photo {
-    width: 72%;
+    width: 73%;
   }
 
   .orbit-one {
@@ -2239,21 +3311,30 @@ button {
     height: 410px;
   }
 
+  .orbit-three {
+    width: 380px;
+    height: 200px;
+  }
+
   .floating-chip {
-    transform: scale(.82);
+    transform: scale(.78);
   }
 
   .chip-sql {
-    left: -5%;
+    left: -7%;
   }
 
   .chip-python {
-    right: -6%;
+    right: -8%;
   }
 
   .chip-cloud {
-    left: 0;
+    left: -3%;
     bottom: 8%;
+  }
+
+  .data-label {
+    display: none;
   }
 
   .about-intro,
@@ -2266,6 +3347,10 @@ button {
     font-size: 34px;
   }
 
+  .large-symbol {
+    font-size: 90px;
+  }
+
   .education-card {
     padding: 28px;
   }
@@ -2276,6 +3361,10 @@ button {
 
   .skill-group {
     padding: 24px;
+  }
+
+  .timeline-content {
+    padding: 25px 20px;
   }
 
   .project-card {
@@ -2316,6 +3405,31 @@ button {
     flex-direction: column;
 
     gap: 10px;
+  }
+
+}
+
+
+/* ================= REDUCED MOTION ================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+
+    transition: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+
+    transform: none;
   }
 
 }
