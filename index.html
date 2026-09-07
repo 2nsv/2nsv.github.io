@@ -1,1074 +1,738 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Anas Ahmed — Data Engineer Portfolio">
-  <title>Anas Ahmed | Data Engineer</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <title>Anas Ahmed | Data Engineer</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <meta name="description" content="Anas Ahmed — Software Engineering student focused on Data Engineering, SQL, Python, ETL, Data Modeling and Cloud Technologies.">
 
-  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="page-noise"></div>
-  <div class="cursor-glow" id="cursorGlow"></div>
+    <!-- Background -->
+    <div class="background-grid"></div>
+    <div class="noise"></div>
 
-  <div class="page-loader" id="pageLoader">
-    <div class="loader-inner">
-      <span>INITIALIZING</span>
-      <strong>DATA_ENGINEER</strong>
-      <div class="loader-line">
-        <i></i>
-      </div>
-    </div>
-  </div>
+    <!-- Navigation -->
+    <header class="header" id="header">
+        <div class="container nav-container">
 
-  <header class="site-header" id="siteHeader">
-
-    <a href="#top" class="brand">
-      <span class="brand-mark">AA</span>
-      <span class="brand-text">ANAS<span>.AHMED</span></span>
-    </a>
-
-    <nav class="desktop-nav">
-      <a href="#about" data-nav>About</a>
-      <a href="#education" data-nav>Education</a>
-      <a href="#skills" data-nav>Skills</a>
-      <a href="#experience" data-nav>Experience</a>
-      <a href="#services" data-nav>Services</a>
-      <a href="#projects" data-nav>Projects</a>
-      <a href="#contact" data-nav>Contact</a>
-    </nav>
-
-    <button
-      class="nav-toggle"
-      id="navToggle"
-      aria-label="Open menu"
-      aria-expanded="false"
-    >
-      <span></span>
-      <span></span>
-    </button>
-
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="#about">About</a>
-      <a href="#education">Education</a>
-      <a href="#skills">Skills</a>
-      <a href="#experience">Experience</a>
-      <a href="#services">Services</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </div>
-
-  </header>
-
-
-  <main id="top">
-
-    <!-- ================= HERO ================= -->
-
-    <section class="hero section-shell">
-
-      <div class="hero-particles" id="heroParticles"></div>
-
-      <div class="hero-grid">
-
-        <div class="hero-copy">
-
-          <div class="eyebrow reveal">
-            <span class="status-dot"></span>
-            DATA ENGINEERING / 01
-          </div>
-
-          <h1 class="hero-name reveal">
-            <span class="name-line">Anas</span>
-            <span class="name-line outlined">Ahmed</span>
-          </h1>
-
-          <div class="hero-role reveal">
-            <span class="role-line"></span>
-            <span class="role-text">DATA ENGINEER</span>
-            <span class="role-cursor"></span>
-          </div>
-
-          <div class="hero-actions reveal">
-
-            <a href="#contact" class="btn btn-primary magnetic">
-              <span>Contact Me</span>
-              <i class="ph ph-arrow-up-right"></i>
+            <a href="#home" class="logo">
+                <span class="logo-bracket">{</span>
+                <span>ANAS</span>
+                <span class="logo-bracket">}</span>
             </a>
 
-            <a href="#projects" class="btn btn-secondary magnetic">
-              <span>View Projects</span>
-              <i class="ph ph-arrow-down"></i>
+            <nav class="nav" id="nav">
+                <a href="#about">About</a>
+                <a href="#education">Education</a>
+                <a href="#skills">Skills</a>
+                <a href="#experience">Experience</a>
+                <a href="#services">Services</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </nav>
+
+            <a href="#contact" class="nav-contact">
+                Let's Talk
             </a>
 
-          </div>
+            <button class="menu-btn" id="menuBtn" aria-label="Open menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+        </div>
+    </header>
+
+
+    <main>
+
+        <!-- HERO -->
+        <section class="hero" id="home">
+
+            <div class="hero-glow"></div>
+
+            <div class="hero-lines">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div class="container hero-container">
+
+                <div class="hero-content">
+
+                    <div class="hero-tag">
+                        <span class="status-dot"></span>
+                        DATA ENGINEERING
+                    </div>
+
+                    <h1>
+                        Anas Ahmed
+                    </h1>
+
+                    <div class="hero-title">
+                        DATA
+                        <span>ENGINEER</span>
+                    </div>
+
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">
+                            Contact Me
+                            <span>↗</span>
+                        </a>
+
+                        <a href="#projects" class="btn btn-secondary">
+                            View Projects
+                            <span>↓</span>
+                        </a>
+                    </div>
+
+                </div>
+
+
+                <div class="hero-visual">
+
+                    <div class="orbit orbit-1"></div>
+                    <div class="orbit orbit-2"></div>
+
+                    <div class="data-node node-1"></div>
+                    <div class="data-node node-2"></div>
+                    <div class="data-node node-3"></div>
+                    <div class="data-node node-4"></div>
+
+                    <div class="profile-wrapper">
+
+                        <div class="profile-ring"></div>
+
+                        <img
+                            src="Gemini_Generated_Image_h23wjuh23wjuh23w.jpg"
+                            alt="Anas Ahmed"
+                            class="profile-image"
+                        >
+
+                        <div class="scan-line"></div>
+
+                    </div>
+
+                    <div class="floating-card card-sql">
+                        <span class="mini-dot"></span>
+                        SQL
+                    </div>
+
+                    <div class="floating-card card-python">
+                        <i class="devicon-python-plain"></i>
+                        Python
+                    </div>
+
+                    <div class="floating-card card-azure">
+                        <i class="devicon-azure-plain"></i>
+                        Azure
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="scroll-indicator">
+                <span>SCROLL TO EXPLORE</span>
+                <div class="scroll-line"></div>
+            </div>
+
+        </section>
+
+
+        <!-- ABOUT -->
+        <section class="section" id="about">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+                    <span class="section-number">01</span>
+                    <div>
+                        <span class="eyebrow">WHO I AM</span>
+                        <h2>About Me</h2>
+                    </div>
+                </div>
+
+                <div class="about-grid">
+
+                    <div class="about-text reveal">
+
+                        <p class="large-text">
+                            I am a Software Engineering student at Alexandria University focused on becoming a professional Data Engineer.
+                        </p>
+
+                        <p>
+                            I help organizations turn growing volumes of raw data into structured, reliable, and usable data through SQL, Python, ETL pipelines, data modeling, and data warehousing.
+                        </p>
+
+                        <p>
+                            My main interests are databases, data engineering, cloud technologies, and building systems that make data easier to access, manage, and use.
+                        </p>
+
+                    </div>
+
+                    <div class="about-stats reveal">
+
+                        <div class="stat-card">
+                            <span class="stat-number">2028</span>
+                            <span class="stat-label">Expected Graduation</span>
+                        </div>
+
+                        <div class="stat-card">
+                            <span class="stat-number">SQL</span>
+                            <span class="stat-label">Core Focus</span>
+                        </div>
+
+                        <div class="stat-card">
+                            <span class="stat-number">DE</span>
+                            <span class="stat-label">Career Direction</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- EDUCATION -->
+        <section class="section section-dark" id="education">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+                    <span class="section-number">02</span>
+                    <div>
+                        <span class="eyebrow">ACADEMIC JOURNEY</span>
+                        <h2>Education</h2>
+                    </div>
+                </div>
+
+                <div class="timeline">
+
+                    <div class="timeline-item reveal">
+
+                        <div class="timeline-dot"></div>
+
+                        <div class="timeline-date">
+                            2024 — 2028
+                        </div>
+
+                        <div class="timeline-card">
+
+                            <span class="card-label">
+                                UNIVERSITY
+                            </span>
+
+                            <h3>Alexandria University</h3>
+
+                            <p>
+                                Software Engineering Student · SIM — Software Industry and Multimedia
+                            </p>
+
+                            <div class="timeline-meta">
+                                Expected graduation 2028
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SKILLS -->
+        <section class="section" id="skills">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+                    <span class="section-number">03</span>
+                    <div>
+                        <span class="eyebrow">TECHNICAL STACK</span>
+                        <h2>Skills</h2>
+                    </div>
+                </div>
+
+
+                <div class="skills-grid">
+
+                    <div class="skill-card reveal">
+
+                        <div class="skill-icon">
+                            <i class="devicon-oracle-original"></i>
+                        </div>
+
+                        <span class="skill-index">01</span>
+
+                        <h3>Databases & SQL</h3>
+
+                        <p>
+                            Oracle, MySQL, SQL, Database Design, Data Modeling, ERD, Relational Databases
+                        </p>
+
+                        <div class="skill-line"></div>
+
+                    </div>
+
+
+                    <div class="skill-card reveal">
+
+                        <div class="skill-icon">
+                            <span>ETL</span>
+                        </div>
+
+                        <span class="skill-index">02</span>
+
+                        <h3>Data Engineering</h3>
+
+                        <p>
+                            ETL / ELT, Data Pipelines, Data Warehousing, Data Processing, PySpark
+                        </p>
+
+                        <div class="skill-line"></div>
+
+                    </div>
+
+
+                    <div class="skill-card reveal">
+
+                        <div class="skill-icon">
+                            <i class="devicon-azure-plain"></i>
+                        </div>
+
+                        <span class="skill-index">03</span>
+
+                        <h3>Cloud</h3>
+
+                        <p>
+                            Microsoft Azure, ADLS Gen2, Azure Synapse Analytics
+                        </p>
+
+                        <div class="skill-line"></div>
+
+                    </div>
+
+
+                    <div class="skill-card reveal">
+
+                        <div class="skill-icon">
+                            <i class="devicon-python-plain"></i>
+                        </div>
+
+                        <span class="skill-index">04</span>
+
+                        <h3>Programming</h3>
+
+                        <p>
+                            Python, Java, OOP, Automation
+                        </p>
+
+                        <div class="skill-line"></div>
+
+                    </div>
+
+
+                    <div class="skill-card reveal">
+
+                        <div class="skill-icon">
+                            <i class="devicon-git-plain"></i>
+                        </div>
+
+                        <span class="skill-index">05</span>
+
+                        <h3>Tools</h3>
+
+                        <p>
+                            Git, GitHub, Jupyter, SQL Developer, VS Code
+                        </p>
+
+                        <div class="skill-line"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- EXPERIENCE -->
+        <section class="section section-dark" id="experience">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+                    <span class="section-number">04</span>
+                    <div>
+                        <span class="eyebrow">MY JOURNEY</span>
+                        <h2>Experience</h2>
+                    </div>
+                </div>
+
+
+                <div class="experience-list">
+
+                    <article class="experience-item reveal">
+
+                        <div class="experience-year">
+                            2026
+                        </div>
+
+                        <div class="experience-content">
+
+                            <div class="experience-top">
+
+                                <div>
+                                    <span class="experience-type">
+                                        TRAINING
+                                    </span>
+
+                                    <h3>Data Engineering Track</h3>
+
+                                    <h4>DEPI</h4>
+                                </div>
+
+                                <span class="experience-arrow">↗</span>
+
+                            </div>
+
+                            <p>
+                                Structured training focused on Python, SQL, ETL, PySpark, cloud technologies, and modern data platforms.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                    <article class="experience-item reveal">
+
+                        <div class="experience-year">
+                            2026
+                        </div>
+
+                        <div class="experience-content">
+
+                            <div class="experience-top">
+
+                                <div>
+                                    <span class="experience-type">
+                                        INTERNSHIP
+                                    </span>
+
+                                    <h3>Data Engineering Intern</h3>
+
+                                    <h4>Space Tech · Alexandria, Egypt</h4>
+                                </div>
+
+                                <span class="experience-arrow">↗</span>
+
+                            </div>
+
+                            <p>
+                                Hands-on internship applying Data Engineering concepts and practical workflows.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SERVICES -->
+        <section class="section" id="services">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+                    <span class="section-number">05</span>
+                    <div>
+                        <span class="eyebrow">WHAT I DO</span>
+                        <h2>Services</h2>
+                    </div>
+                </div>
+
+
+                <div class="services-grid">
+
+                    <div class="service-card reveal">
+
+                        <span class="service-number">01</span>
+
+                        <div class="service-icon">
+                            ⟶
+                        </div>
+
+                        <h3>Data Pipelines</h3>
+
+                        <p>
+                            Build structured ETL and ELT workflows that move data reliably between systems.
+                        </p>
+
+                    </div>
+
+
+                    <div class="service-card reveal">
+
+                        <span class="service-number">02</span>
+
+                        <div class="service-icon">
+                            ◇
+                        </div>
+
+                        <h3>Data Modeling</h3>
+
+                        <p>
+                            Design clean relational structures, ERDs, and data models that make information easier to manage.
+                        </p>
+
+                    </div>
+
+
+                    <div class="service-card reveal">
+
+                        <span class="service-number">03</span>
+
+                        <div class="service-icon">
+                            ▦
+                        </div>
+
+                        <h3>Data Warehousing</h3>
+
+                        <p>
+                            Organize business data into structured systems designed for reliable access and analytics.
+                        </p>
+
+                    </div>
+
+
+                    <div class="service-card reveal">
+
+                        <span class="service-number">04</span>
+
+                        <div class="service-icon">
+                            &lt;/&gt;
+                        </div>
+
+                        <h3>Data Automation</h3>
+
+                        <p>
+                            Use Python and SQL to automate repetitive data processing and engineering workflows.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROJECTS -->
+        <section class="section section-dark" id="projects">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+                    <span class="section-number">06</span>
+                    <div>
+                        <span class="eyebrow">SELECTED WORK</span>
+                        <h2>Projects</h2>
+                    </div>
+                </div>
+
+
+                <article class="project-card reveal">
+
+                    <div class="project-visual">
+
+                        <div class="database-cylinder">
+
+                            <div class="database-top"></div>
+
+                            <div class="database-body">
+
+                                <div class="database-row"></div>
+                                <div class="database-row"></div>
+                                <div class="database-row"></div>
+
+                            </div>
+
+                            <div class="database-bottom"></div>
+
+                        </div>
+
+                        <div class="db-label label-1">
+                            PATIENT
+                        </div>
+
+                        <div class="db-label label-2">
+                            ORDER
+                        </div>
+
+                        <div class="db-label label-3">
+                            TEST
+                        </div>
+
+                    </div>
+
+
+                    <div class="project-content">
+
+                        <span class="project-category">
+                            DATABASE ENGINEERING
+                        </span>
+
+                        <h3>
+                            Lab Management System
+                        </h3>
+
+                        <p>
+                            A medical laboratory management database designed to manage patients, test orders, tests, employees, and payments using a structured relational database architecture.
+                        </p>
+
+                        <div class="project-tech">
+
+                            <span>Oracle SQL</span>
+                            <span>Database Design</span>
+                            <span>Data Modeling</span>
+                            <span>Chen ERD</span>
+
+                        </div>
+
+                        <a
+                            href="https://github.com/2nsv/Lab-Management-System"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="project-link"
+                        >
+                            View on GitHub
+                            <span>↗</span>
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTACT -->
+        <section class="contact-section" id="contact">
+
+            <div class="container">
+
+                <div class="contact-box reveal">
+
+                    <div class="contact-left">
+
+                        <span class="eyebrow">
+                            GET IN TOUCH
+                        </span>
+
+                        <h2>
+                            Let's build something
+                            <span>meaningful.</span>
+                        </h2>
+
+                        <p>
+                            I'm always open to connecting, discussing Data Engineering, and exploring opportunities to build useful data systems.
+                        </p>
+
+                    </div>
+
+
+                    <div class="contact-right">
+
+                        <a href="mailto:anasofficial.v@gmail.com" class="contact-link">
+                            <span>Email</span>
+                            <strong>anasofficial.v@gmail.com</strong>
+                            <span>↗</span>
+                        </a>
+
+                        <a
+                            href="https://github.com/2nsv"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="contact-link"
+                        >
+                            <span>GitHub</span>
+                            <strong>github.com/2nsv</strong>
+                            <span>↗</span>
+                        </a>
+
+                        <a
+                            href="https://www.linkedin.com/in/anas-ahmed-3540aa2b6/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="contact-link"
+                        >
+                            <span>LinkedIn</span>
+                            <strong>anas-ahmed-3540aa2b6</strong>
+                            <span>↗</span>
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+
+        <div class="container footer-container">
+
+            <span>© 2026 Anas Ahmed</span>
+
+            <span>Alexandria, EG</span>
+
+            <span>Data Engineer</span>
 
         </div>
 
+    </footer>
 
-        <div class="hero-visual reveal" id="heroVisual">
 
-          <div class="visual-grid"></div>
-
-          <div class="visual-orbit orbit-one"></div>
-          <div class="visual-orbit orbit-two"></div>
-          <div class="visual-orbit orbit-three"></div>
-
-          <div class="data-node node-one">
-            <span></span>
-          </div>
-
-          <div class="data-node node-two">
-            <span></span>
-          </div>
-
-          <div class="data-node node-three">
-            <span></span>
-          </div>
-
-          <div class="data-node node-four">
-            <span></span>
-          </div>
-
-
-          <div class="hero-photo" id="heroPhoto">
-
-            <div class="photo-glow"></div>
-
-            <div class="photo-frame">
-
-              <div class="scan-line"></div>
-
-              <div class="photo-corner corner-tl"></div>
-              <div class="photo-corner corner-tr"></div>
-              <div class="photo-corner corner-bl"></div>
-              <div class="photo-corner corner-br"></div>
-
-              <div class="photo-top">
-                <span>PROFILE</span>
-                <span>DE_01</span>
-              </div>
-
-              <img
-                src="Gemini_Generated_Image_h23wjuh23wjuh23w.jpg"
-                alt="Anas Ahmed"
-              >
-
-              <div class="photo-overlay"></div>
-
-              <div class="photo-bottom">
-                <span>ANAS.AHMED</span>
-                <span>DATA</span>
-              </div>
-
-            </div>
-
-          </div>
-
-
-          <div class="floating-chip chip-sql parallax-item">
-            <i class="ph ph-database"></i>
-            <span>SQL</span>
-            <b>01</b>
-          </div>
-
-          <div class="floating-chip chip-python parallax-item">
-            <i class="devicon-python-plain"></i>
-            <span>PYTHON</span>
-            <b>02</b>
-          </div>
-
-          <div class="floating-chip chip-cloud parallax-item">
-            <i class="ph ph-cloud"></i>
-            <span>AZURE</span>
-            <b>03</b>
-          </div>
-
-
-          <div class="data-label label-top">
-            <span>STATUS</span>
-            <strong>ONLINE</strong>
-          </div>
-
-          <div class="data-label label-bottom">
-            <span>DATA FLOW</span>
-            <strong>ACTIVE</strong>
-          </div>
-
-
-          <svg class="hero-connections" viewBox="0 0 600 650">
-            <path d="M70 180 C150 180 180 100 260 130" />
-            <path d="M530 210 C450 210 430 160 350 175" />
-            <path d="M100 500 C180 500 200 550 280 515" />
-            <path d="M500 470 C430 470 410 510 350 495" />
-          </svg>
-
-        </div>
-
-      </div>
-
-
-      <div class="hero-bottom-line">
-
-        <span>SQL</span>
-        <span>PYTHON</span>
-        <span>ETL</span>
-        <span>DATA MODELING</span>
-        <span>WAREHOUSING</span>
-        <span>AZURE</span>
-
-        <span class="scroll-indicator">
-          SCROLL
-          <i class="ph ph-arrow-down"></i>
-        </span>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= ABOUT ================= -->
-
-    <section class="section section-shell" id="about">
-
-      <div class="section-heading reveal">
-
-        <div>
-          <span class="section-kicker">01 / ABOUT</span>
-          <h2>About Me</h2>
-        </div>
-
-        <span class="heading-note">
-          THE FOUNDATION BEHIND THE ENGINEER.
-        </span>
-
-      </div>
-
-
-      <div class="about-grid">
-
-        <div class="about-intro reveal">
-
-          <span class="about-index">01</span>
-
-          <div>
-            <span class="large-symbol">{ }</span>
-
-            <h3>
-              I turn raw data into reliable systems that businesses can actually use.
-            </h3>
-          </div>
-
-        </div>
-
-
-        <div class="about-copy reveal">
-
-          <p>
-            I am a Software Engineering student at Alexandria University focused on becoming a professional Data Engineer.
-          </p>
-
-          <p>
-            I help organizations turn growing volumes of raw data into structured, reliable, and usable data through SQL, Python, ETL pipelines, data modeling, and data warehousing.
-          </p>
-
-          <p>
-            My main interests are databases, data engineering, cloud technologies, and building systems that make data easier to access, manage, and use.
-          </p>
-
-        </div>
-
-
-        <div class="about-focus reveal">
-
-          <span class="mini-label">
-            CURRENT FOCUS
-          </span>
-
-          <div class="focus-tags">
-            <span>SQL</span>
-            <span>Python</span>
-            <span>ETL</span>
-            <span>Azure</span>
-            <span>PySpark</span>
-            <span>Warehousing</span>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= EDUCATION ================= -->
-
-    <section class="section section-shell" id="education">
-
-      <div class="section-heading reveal">
-
-        <div>
-          <span class="section-kicker">02 / EDUCATION</span>
-          <h2>Education</h2>
-        </div>
-
-        <span class="heading-note">
-          THE FOUNDATION BEHIND THE ENGINEER.
-        </span>
-
-      </div>
-
-
-      <div class="education-card interactive-card reveal">
-
-        <div class="education-year">
-          2024 — 2028
-        </div>
-
-        <div class="education-main">
-
-          <span class="card-kicker">
-            ALEXANDRIA UNIVERSITY
-          </span>
-
-          <h3>
-            Software Engineering
-          </h3>
-
-          <p>
-            SIM — Software Industry and Multimedia
-          </p>
-
-        </div>
-
-        <div class="education-side">
-
-          <span>EXPECTED</span>
-
-          <strong>2028</strong>
-
-          <span>GRADUATION</span>
-
-        </div>
-
-        <div class="card-shine"></div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= SKILLS ================= -->
-
-    <section class="section section-shell" id="skills">
-
-      <div class="section-heading reveal">
-
-        <div>
-          <span class="section-kicker">03 / SKILLS</span>
-          <h2>Technical Stack</h2>
-        </div>
-
-        <span class="heading-note">
-          TOOLS FOR BUILDING DATA SYSTEMS.
-        </span>
-
-      </div>
-
-
-      <div class="skills-grid">
-
-
-        <article class="skill-group interactive-card reveal">
-
-          <div class="skill-head">
-            <span>01</span>
-            <h3>Databases & SQL</h3>
-            <i class="ph ph-database"></i>
-          </div>
-
-          <div class="tech-grid">
-
-            <div class="tech">
-              <i class="devicon-oracle-original"></i>
-              <span>Oracle</span>
-            </div>
-
-            <div class="tech">
-              <i class="devicon-mysql-original"></i>
-              <span>MySQL</span>
-            </div>
-
-            <div class="tech">
-              <i class="ph ph-database"></i>
-              <span>SQL</span>
-            </div>
-
-            <div class="tech">
-              <i class="ph ph-tree-structure"></i>
-              <span>Data Modeling</span>
-            </div>
-
-            <div class="tech">
-              <i class="ph ph-git-branch"></i>
-              <span>ERD</span>
-            </div>
-
-            <div class="tech">
-              <i class="ph ph-table"></i>
-              <span>Relational DB</span>
-            </div>
-
-          </div>
-
-          <div class="card-shine"></div>
-
-        </article>
-
-
-        <article class="skill-group interactive-card reveal">
-
-          <div class="skill-head">
-            <span>02</span>
-            <h3>Data Engineering</h3>
-            <i class="ph ph-flow-arrow"></i>
-          </div>
-
-          <div class="tech-grid">
-
-            <div class="tech">
-              <i class="ph ph-arrows-clockwise"></i>
-              <span>ETL / ELT</span>
-            </div>
-
-            <div class="tech">
-              <i class="ph ph-flow-arrow"></i>
-              <span>Data Pipelines</span>
-            </div>
-
-            <div class="tech">
-              <i class="ph ph-stack"></i>
-              <span>Warehousing</span>
-            </div>
-
-            <div class="tech">
-              <i class="devicon-apachespark-original"></i>
-              <span>PySpark</span>
-            </div>
-
-            <div class="tech">
-              <i class="ph ph-chart-line-up"></i>
-              <span>Data Processing</span>
-            </div>
-
-          </div>
-
-          <div class="card-shine"></div>
-
-        </article>
-
-
-        <article class="skill-group interactive-card reveal">
-
-          <div class="skill-head">
-            <span>03</span>
-            <h3>Cloud</h3>
-            <i class="ph ph-cloud"></i>
-          </div>
-
-          <div class="tech-grid">
-
-            <div class="tech">
-              <i class="devicon-azure-original"></i>
-              <span>Microsoft Azure</span>
-            </div>
-
-            <div class="tech">
-              <i class="ph ph-cloud"></i>
-              <span>ADLS Gen2</span>
-            </div>
-
-            <div class="tech">
-              <i class="ph ph-chart-bar"></i>
-              <span>Synapse Analytics</span>
-            </div>
-
-          </div>
-
-          <div class="card-shine"></div>
-
-        </article>
-
-
-        <article class="skill-group interactive-card reveal">
-
-          <div class="skill-head">
-            <span>04</span>
-            <h3>Programming & Tools</h3>
-            <i class="ph ph-code"></i>
-          </div>
-
-          <div class="tech-grid">
-
-            <div class="tech">
-              <i class="devicon-python-plain"></i>
-              <span>Python</span>
-            </div>
-
-            <div class="tech">
-              <i class="devicon-java-plain"></i>
-              <span>Java</span>
-            </div>
-
-            <div class="tech">
-              <i class="devicon-git-plain"></i>
-              <span>Git</span>
-            </div>
-
-            <div class="tech">
-              <i class="devicon-github-original"></i>
-              <span>GitHub</span>
-            </div>
-
-            <div class="tech">
-              <i class="ph ph-notebook"></i>
-              <span>Jupyter</span>
-            </div>
-
-            <div class="tech">
-              <i class="ph ph-code"></i>
-              <span>VS Code</span>
-            </div>
-
-          </div>
-
-          <div class="card-shine"></div>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= EXPERIENCE ================= -->
-
-    <section class="section section-shell" id="experience">
-
-      <div class="section-heading reveal">
-
-        <div>
-          <span class="section-kicker">04 / EXPERIENCE</span>
-          <h2>EXPERIENCE</h2>
-        </div>
-
-        <span class="heading-note">
-          LEARNING BY BUILDING.
-        </span>
-
-      </div>
-
-
-      <div class="timeline">
-
-        <article class="timeline-item reveal">
-
-          <div class="timeline-marker">
-            01
-          </div>
-
-          <div class="timeline-date">
-            2026
-          </div>
-
-          <div class="timeline-content interactive-card">
-
-            <span class="card-kicker">
-              DEPI
-            </span>
-
-            <h3>
-              Data Engineering Track
-            </h3>
-
-            <p>
-              Structured training focused on practical, job-ready Data Engineering skills across Python, SQL, ETL, PySpark, cloud technologies, and modern data platforms.
-            </p>
-
-            <div class="tag-row">
-              <span>Python</span>
-              <span>SQL</span>
-              <span>ETL</span>
-              <span>PySpark</span>
-              <span>Cloud</span>
-            </div>
-
-            <div class="timeline-progress">
-              <span></span>
-            </div>
-
-          </div>
-
-        </article>
-
-
-        <article class="timeline-item reveal">
-
-          <div class="timeline-marker">
-            02
-          </div>
-
-          <div class="timeline-date">
-            2026
-          </div>
-
-          <div class="timeline-content interactive-card">
-
-            <span class="card-kicker">
-              SPACE TECH · ALEXANDRIA, EGYPT
-            </span>
-
-            <h3>
-              Data Engineering Intern
-            </h3>
-
-            <p>
-              Hands-on internship applying Data Engineering concepts and practical workflows.
-            </p>
-
-            <div class="tag-row">
-              <span>Data Engineering</span>
-              <span>SQL</span>
-              <span>Data Workflows</span>
-            </div>
-
-            <div class="timeline-progress">
-              <span></span>
-            </div>
-
-          </div>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= SERVICES ================= -->
-
-    <section class="section section-shell" id="services">
-
-      <div class="section-heading reveal">
-
-        <div>
-          <span class="section-kicker">05 / SERVICES</span>
-          <h2>Services</h2>
-        </div>
-
-        <span class="heading-note">
-          DATA WORK THAT CREATES STRUCTURE.
-        </span>
-
-      </div>
-
-
-      <div class="services-grid">
-
-
-        <article class="service-card interactive-card reveal">
-
-          <div class="service-top">
-            <span>01</span>
-            <i class="ph ph-database"></i>
-          </div>
-
-          <div class="service-icon">
-            <i class="ph ph-database"></i>
-          </div>
-
-          <h3>SQL & Database Design</h3>
-
-          <p>
-            Designing structured relational databases and writing SQL for reliable data access.
-          </p>
-
-          <div class="service-arrow">
-            <i class="ph ph-arrow-up-right"></i>
-          </div>
-
-          <div class="card-shine"></div>
-
-        </article>
-
-
-        <article class="service-card interactive-card reveal">
-
-          <div class="service-top">
-            <span>02</span>
-            <i class="ph ph-flow-arrow"></i>
-          </div>
-
-          <div class="service-icon">
-            <i class="ph ph-flow-arrow"></i>
-          </div>
-
-          <h3>Data Pipeline Development</h3>
-
-          <p>
-            Building practical ETL workflows that move data through extraction, transformation, validation and loading.
-          </p>
-
-          <div class="service-arrow">
-            <i class="ph ph-arrow-up-right"></i>
-          </div>
-
-          <div class="card-shine"></div>
-
-        </article>
-
-
-        <article class="service-card interactive-card reveal">
-
-          <div class="service-top">
-            <span>03</span>
-            <i class="ph ph-tree-structure"></i>
-          </div>
-
-          <div class="service-icon">
-            <i class="ph ph-tree-structure"></i>
-          </div>
-
-          <h3>Data Modeling</h3>
-
-          <p>
-            Organizing entities and relationships into clear, maintainable data models.
-          </p>
-
-          <div class="service-arrow">
-            <i class="ph ph-arrow-up-right"></i>
-          </div>
-
-          <div class="card-shine"></div>
-
-        </article>
-
-
-        <article class="service-card interactive-card reveal">
-
-          <div class="service-top">
-            <span>04</span>
-            <i class="ph ph-stack"></i>
-          </div>
-
-          <div class="service-icon">
-            <i class="ph ph-stack"></i>
-          </div>
-
-          <h3>Data Warehousing</h3>
-
-          <p>
-            Structuring analytical data for easier access, management and future growth.
-          </p>
-
-          <div class="service-arrow">
-            <i class="ph ph-arrow-up-right"></i>
-          </div>
-
-          <div class="card-shine"></div>
-
-        </article>
-
-
-        <article class="service-card interactive-card reveal">
-
-          <div class="service-top">
-            <span>05</span>
-            <i class="devicon-python-plain"></i>
-          </div>
-
-          <div class="service-icon">
-            <i class="devicon-python-plain"></i>
-          </div>
-
-          <h3>Python Data Automation</h3>
-
-          <p>
-            Using Python for data processing, automation and repeatable engineering workflows.
-          </p>
-
-          <div class="service-arrow">
-            <i class="ph ph-arrow-up-right"></i>
-          </div>
-
-          <div class="card-shine"></div>
-
-        </article>
-
-
-        <article class="service-card interactive-card reveal">
-
-          <div class="service-top">
-            <span>06</span>
-            <i class="devicon-azure-original"></i>
-          </div>
-
-          <div class="service-icon">
-            <i class="devicon-azure-original"></i>
-          </div>
-
-          <h3>Azure Data Solutions</h3>
-
-          <p>
-            Working with Azure data services as part of modern cloud-oriented data systems.
-          </p>
-
-          <div class="service-arrow">
-            <i class="ph ph-arrow-up-right"></i>
-          </div>
-
-          <div class="card-shine"></div>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-    <!-- ================= PROJECT ================= -->
-
-    <section class="section section-shell" id="projects">
-
-      <div class="section-heading reveal">
-
-        <div>
-          <span class="section-kicker">06 / SELECTED WORK</span>
-          <h2>Projects</h2>
-        </div>
-
-        <span class="heading-note">
-          ONE PROJECT. BUILT WITH PURPOSE.
-        </span>
-
-      </div>
-
-
-      <article class="project-card interactive-card reveal">
-
-        <div class="project-number">
-          01
-        </div>
-
-
-        <div class="project-content">
-
-          <div class="project-meta">
-            <span>DATABASE ENGINEERING</span>
-            <span>2026</span>
-          </div>
-
-          <h3>
-            Lab Management System
-          </h3>
-
-          <p>
-            A medical laboratory management database designed around patients, test orders, tests, employees and payments using relational database principles.
-          </p>
-
-          <div class="project-stack">
-
-            <span>
-              <i class="devicon-oracle-original"></i>
-              Oracle SQL
-            </span>
-
-            <span>
-              <i class="ph ph-database"></i>
-              Data Modeling
-            </span>
-
-            <span>
-              <i class="ph ph-tree-structure"></i>
-              Chen ERD
-            </span>
-
-          </div>
-
-          <a
-            href="https://github.com/2nsv/Lab-Management-System"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="project-link magnetic"
-          >
-            <span>View Project</span>
-            <i class="ph ph-arrow-up-right"></i>
-          </a>
-
-        </div>
-
-
-        <div class="project-visual database-visual">
-
-          <div class="database-cylinder">
-
-            <div class="db-top"></div>
-
-            <div class="db-lines">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-
-            <div class="db-bottom"></div>
-
-          </div>
-
-
-          <div class="visual-label label-a">
-            PATIENT
-          </div>
-
-          <div class="visual-label label-b">
-            ORDER
-          </div>
-
-          <div class="visual-label label-c">
-            TEST
-          </div>
-
-          <div class="connector connector-a"></div>
-          <div class="connector connector-b"></div>
-          <div class="connector connector-c"></div>
-
-          <div class="database-pulse"></div>
-
-        </div>
-
-        <div class="card-shine"></div>
-
-      </article>
-
-    </section>
-
-
-    <!-- ================= CONTACT ================= -->
-
-    <section class="section section-shell contact-section" id="contact">
-
-      <div class="contact-card reveal">
-
-        <div class="contact-copy">
-
-          <span class="section-kicker">
-            07 / CONTACT
-          </span>
-
-          <h2>
-            Let's build something<br>
-            <span>reliable with data.</span>
-          </h2>
-
-          <p>
-            If you want to talk about Data Engineering, databases, projects, or opportunities, I'd be happy to connect.
-          </p>
-
-          <div class="contact-status">
-            <span></span>
-            AVAILABLE FOR CONNECTIONS
-          </div>
-
-        </div>
-
-
-        <div class="contact-links">
-
-          <a
-            href="mailto:anasofficial.v@gmail.com"
-            class="contact-link magnetic"
-          >
-
-            <span>
-              <small>EMAIL</small>
-              anasofficial.v@gmail.com
-            </span>
-
-            <i class="ph ph-arrow-up-right"></i>
-
-          </a>
-
-
-          <a
-            href="https://github.com/2nsv"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="contact-link magnetic"
-          >
-
-            <span>
-              <small>GITHUB</small>
-              github.com/2nsv
-            </span>
-
-            <i class="ph ph-arrow-up-right"></i>
-
-          </a>
-
-
-          <a
-            href="https://www.linkedin.com/in/anas-ahmed-3540aa2b6/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="contact-link magnetic"
-          >
-
-            <span>
-              <small>LINKEDIN</small>
-              linkedin.com/in/anas-ahmed-3540aa2b6
-            </span>
-
-            <i class="ph ph-arrow-up-right"></i>
-
-          </a>
-
-        </div>
-
-        <div class="contact-grid"></div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <footer class="site-footer section-shell">
-
-    <span>
-      © 2026 Anas Ahmed
-    </span>
-
-    <span>
-      DATA ENGINEER / ALEXANDRIA, EG
-    </span>
-
-  </footer>
-
-
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
 </html>
