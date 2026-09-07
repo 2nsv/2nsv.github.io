@@ -1,4 +1,5 @@
 (function () {
+
   "use strict";
 
 
@@ -15,72 +16,98 @@
      MOBILE NAVIGATION
   ===================================================== */
 
-  var navToggle = document.getElementById("navToggle");
-  var mobileMenu = document.getElementById("mobileMenu");
+  var navToggle =
+    document.getElementById("navToggle");
+
+  var mobileMenu =
+    document.getElementById("mobileMenu");
 
 
   if (navToggle && mobileMenu) {
 
-    navToggle.addEventListener("click", function () {
+    navToggle.addEventListener(
+      "click",
+      function () {
 
-      var isOpen = mobileMenu.classList.toggle("open");
-
-      navToggle.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-      );
-
-      navToggle.classList.toggle(
-        "open",
-        isOpen
-      );
-
-    });
-
-
-    mobileMenu.querySelectorAll("a").forEach(function (link) {
-
-      link.addEventListener("click", function () {
-
-        mobileMenu.classList.remove("open");
-
-        navToggle.classList.remove("open");
+        var isOpen =
+          mobileMenu.classList.toggle("open");
 
         navToggle.setAttribute(
           "aria-expanded",
-          "false"
+          String(isOpen)
+        );
+
+        navToggle.classList.toggle(
+          "open",
+          isOpen
+        );
+
+      }
+    );
+
+
+    mobileMenu
+      .querySelectorAll("a")
+      .forEach(function (link) {
+
+        link.addEventListener(
+          "click",
+          function () {
+
+            mobileMenu.classList.remove(
+              "open"
+            );
+
+            navToggle.classList.remove(
+              "open"
+            );
+
+            navToggle.setAttribute(
+              "aria-expanded",
+              "false"
+            );
+
+          }
         );
 
       });
-
-    });
 
   }
 
 
   /* =====================================================
-     ACTIVE NAVIGATION SECTION
+     ACTIVE NAVIGATION
   ===================================================== */
 
-  var navLinks = document.querySelectorAll("[data-nav]");
+  var navLinks =
+    document.querySelectorAll(
+      "[data-nav]"
+    );
 
 
-  var sections = Array.prototype.slice
-    .call(navLinks)
-    .map(function (link) {
+  var sections =
+    Array.prototype.slice
+      .call(navLinks)
+      .map(function (link) {
 
-      var href = link.getAttribute("href");
+        var href =
+          link.getAttribute("href");
 
-      if (!href || href.charAt(0) !== "#") {
-        return null;
-      }
 
-      return document.getElementById(
-        href.substring(1)
-      );
+        if (
+          !href ||
+          href.charAt(0) !== "#"
+        ) {
+          return null;
+        }
 
-    })
-    .filter(Boolean);
+
+        return document.getElementById(
+          href.substring(1)
+        );
+
+      })
+      .filter(Boolean);
 
 
   if (
@@ -88,46 +115,62 @@
     sections.length
   ) {
 
-    var navObserver = new IntersectionObserver(
-      function (entries) {
+    var navObserver =
+      new IntersectionObserver(
+        function (entries) {
 
-        entries.forEach(function (entry) {
+          entries.forEach(
+            function (entry) {
 
-          if (entry.isIntersecting) {
+              if (
+                entry.isIntersecting
+              ) {
 
-            var id = entry.target.id;
+                var id =
+                  entry.target.id;
 
 
-            navLinks.forEach(function (link) {
+                navLinks.forEach(
+                  function (link) {
 
-              var match =
-                link.getAttribute("href") ===
-                "#" + id;
+                    var match =
+                      link.getAttribute(
+                        "href"
+                      ) === "#" + id;
 
-              link.classList.toggle(
-                "active",
-                match
-              );
 
-            });
+                    link.classList.toggle(
+                      "active",
+                      match
+                    );
 
-          }
+                  }
+                );
 
-        });
+              }
 
-      },
-      {
-        rootMargin: "-35% 0px -55% 0px",
-        threshold: 0
+            }
+          );
+
+        },
+        {
+          rootMargin:
+            "-35% 0px -55% 0px",
+
+          threshold: 0
+        }
+      );
+
+
+    sections.forEach(
+      function (section) {
+
+        navObserver.observe(
+          section
+        );
+
       }
     );
-
-
-    sections.forEach(function (section) {
-
-      navObserver.observe(section);
-
-    });
 
   }
 
@@ -136,296 +179,264 @@
      SCROLL REVEAL
   ===================================================== */
 
-  var revealTargets = document.querySelectorAll(
-    ".skill-group, " +
-    ".project-card, " +
-    ".timeline-item, " +
-    ".roadmap-stage, " +
-    ".education-card, " +
-    ".values, " +
-    ".focus-panel, " +
-    ".about-card"
+  var revealTargets =
+    document.querySelectorAll(
+      ".service-card, " +
+      ".tech-card, " +
+      ".project-card, " +
+      ".timeline-item, " +
+      ".education-card, " +
+      ".achievement-card, " +
+      ".testimonial-placeholder, " +
+      ".usp-card, " +
+      ".contact-box"
+    );
+
+
+  revealTargets.forEach(
+    function (element) {
+
+      element.setAttribute(
+        "data-reveal",
+        ""
+      );
+
+    }
   );
 
 
-  revealTargets.forEach(function (element) {
+  if (
+    "IntersectionObserver" in window
+  ) {
 
-    element.setAttribute(
-      "data-reveal",
-      ""
-    );
+    var revealObserver =
+      new IntersectionObserver(
+        function (
+          entries,
+          observer
+        ) {
 
-  });
+          entries.forEach(
+            function (entry) {
 
+              if (
+                entry.isIntersecting
+              ) {
 
-  if ("IntersectionObserver" in window) {
+                entry.target.classList.add(
+                  "in-view"
+                );
 
-    var revealObserver = new IntersectionObserver(
-      function (entries, observer) {
+                observer.unobserve(
+                  entry.target
+                );
 
-        entries.forEach(function (entry) {
+              }
 
-          if (entry.isIntersecting) {
+            }
+          );
 
-            entry.target.classList.add(
-              "in-view"
-            );
-
-            observer.unobserve(
-              entry.target
-            );
-
-          }
-
-        });
-
-      },
-      {
-        threshold: 0.12
-      }
-    );
+        },
+        {
+          threshold: 0.08
+        }
+      );
 
 
     document
-      .querySelectorAll("[data-reveal]")
-      .forEach(function (element) {
+      .querySelectorAll(
+        "[data-reveal]"
+      )
+      .forEach(
+        function (element) {
 
-        revealObserver.observe(element);
+          revealObserver.observe(
+            element
+          );
 
-      });
-
-
-    /* =================================================
-       FOCUS PROGRESS BARS
-    ================================================= */
-
-    var focusBars =
-      document.querySelectorAll(".focus-bar");
-
-
-    var barObserver = new IntersectionObserver(
-      function (entries, observer) {
-
-        entries.forEach(function (entry) {
-
-          if (entry.isIntersecting) {
-
-            entry.target.classList.add(
-              "in-view"
-            );
-
-            observer.unobserve(
-              entry.target
-            );
-
-          }
-
-        });
-
-      },
-      {
-        threshold: 0.35
-      }
-    );
-
-
-    focusBars.forEach(function (bar) {
-
-      barObserver.observe(bar);
-
-    });
+        }
+      );
 
   } else {
 
     document
-      .querySelectorAll("[data-reveal]")
-      .forEach(function (element) {
+      .querySelectorAll(
+        "[data-reveal]"
+      )
+      .forEach(
+        function (element) {
 
-        element.classList.add(
-          "in-view"
-        );
+          element.classList.add(
+            "in-view"
+          );
 
-      });
-
-
-    document
-      .querySelectorAll(".focus-bar")
-      .forEach(function (element) {
-
-        element.classList.add(
-          "in-view"
-        );
-
-      });
+        }
+      );
 
   }
 
 
   /* =====================================================
-     HERO TERMINAL
+     INTERACTIVE HERO IMAGE
   ===================================================== */
 
-  var terminalBody =
-    document.getElementById("terminalBody");
+  var heroPhoto =
+    document.getElementById(
+      "heroPhoto"
+    );
 
 
-  var terminalLines = [
+  if (
+    heroPhoto &&
+    !prefersReducedMotion
+  ) {
 
-    {
-      text: "$ python pipeline.py",
-      delay: 0
-    },
-
-    {
-      text: "",
-      delay: 300
-    },
-
-    {
-      text: "[INFO] Extracting data...",
-      delay: 500
-    },
-
-    {
-      text: "[INFO] Transforming records...",
-      delay: 700
-    },
-
-    {
-      text: "[INFO] Validating data...",
-      delay: 700
-    },
-
-    {
-      text: "[SUCCESS] Pipeline completed.",
-      delay: 700
-    }
-
-  ];
+    var photoFrame =
+      heroPhoto.querySelector(
+        ".photo-frame"
+      );
 
 
-  function renderTerminalInstantly() {
-
-    if (!terminalBody) {
-      return;
-    }
-
-
-    terminalBody.textContent =
-      terminalLines
-        .map(function (line) {
-          return line.text;
-        })
-        .join("\n");
-
-  }
+    var floatingTechs =
+      heroPhoto.querySelectorAll(
+        ".floating-tech"
+      );
 
 
-  function typeTerminal() {
+    var targetX = 0;
+    var targetY = 0;
 
-    if (!terminalBody) {
-      return;
-    }
-
-
-    var lineIndex = 0;
-
-    var charIndex = 0;
-
-    var output = "";
+    var currentX = 0;
+    var currentY = 0;
 
 
-    function typeNextChar() {
+    heroPhoto.addEventListener(
+      "mousemove",
+      function (event) {
 
-      if (
-        lineIndex >=
-        terminalLines.length
-      ) {
-        return;
+        var rect =
+          heroPhoto.getBoundingClientRect();
+
+
+        var x =
+          (event.clientX - rect.left)
+          / rect.width;
+
+
+        var y =
+          (event.clientY - rect.top)
+          / rect.height;
+
+
+        targetY =
+          (x - 0.5) * 12;
+
+
+        targetX =
+          (y - 0.5) * -12;
+
+      }
+    );
+
+
+    heroPhoto.addEventListener(
+      "mouseleave",
+      function () {
+
+        targetX = 0;
+        targetY = 0;
+
+      }
+    );
+
+
+    function animatePhoto() {
+
+      currentX +=
+        (targetX - currentX)
+        * 0.08;
+
+
+      currentY +=
+        (targetY - currentY)
+        * 0.08;
+
+
+      if (photoFrame) {
+
+        photoFrame.style.transform =
+          "rotateX(" +
+          currentX +
+          "deg) rotateY(" +
+          currentY +
+          "deg)";
+
       }
 
 
-      var line =
-        terminalLines[lineIndex];
+      floatingTechs.forEach(
+        function (element, index) {
+
+          var depth =
+            (index + 1) * 1.4;
 
 
-      if (
-        charIndex === 0 &&
-        lineIndex > 0
-      ) {
+          element.style.transform =
+            "translate3d(" +
+            currentY * depth +
+            "px," +
+            currentX * depth +
+            "px,0)";
 
-        output += "\n";
-
-      }
-
-
-      if (
-        charIndex <
-        line.text.length
-      ) {
-
-        output +=
-          line.text.charAt(charIndex);
+        }
+      );
 
 
-        terminalBody.textContent =
-          output;
-
-
-        charIndex++;
-
-
-        window.setTimeout(
-          typeNextChar,
-          18
-        );
-
-      } else {
-
-        lineIndex++;
-
-        charIndex = 0;
-
-
-        var nextDelay =
-          lineIndex <
-          terminalLines.length
-            ? terminalLines[lineIndex].delay
-            : 0;
-
-
-        window.setTimeout(
-          typeNextChar,
-          nextDelay
-        );
-
-      }
+      window.requestAnimationFrame(
+        animatePhoto
+      );
 
     }
 
 
-    typeNextChar();
-
-  }
-
-
-  if (terminalBody) {
-
-    if (prefersReducedMotion) {
-
-      renderTerminalInstantly();
-
-    } else {
-
-      typeTerminal();
-
-    }
+    animatePhoto();
 
   }
 
 
   /* =====================================================
-     CLOSE MOBILE MENU ON RESIZE
+     GLOBAL CURSOR GLOW
+  ===================================================== */
+
+  var cursorGlow =
+    document.querySelector(
+      ".cursor-glow"
+    );
+
+
+  if (
+    cursorGlow &&
+    !prefersReducedMotion
+  ) {
+
+    document.addEventListener(
+      "mousemove",
+      function (event) {
+
+        cursorGlow.style.left =
+          event.clientX + "px";
+
+        cursorGlow.style.top =
+          event.clientY + "px";
+
+      }
+    );
+
+  }
+
+
+  /* =====================================================
+     MOBILE MENU CLOSE ON RESIZE
   ===================================================== */
 
   window.addEventListener(
@@ -433,9 +444,11 @@
     function () {
 
       if (
-        window.innerWidth > 860 &&
+        window.innerWidth > 900 &&
         mobileMenu &&
-        mobileMenu.classList.contains("open")
+        mobileMenu.classList.contains(
+          "open"
+        )
       ) {
 
         mobileMenu.classList.remove(
@@ -449,7 +462,6 @@
             "open"
           );
 
-
           navToggle.setAttribute(
             "aria-expanded",
             "false"
@@ -461,6 +473,42 @@
 
     }
   );
+
+
+  /* =====================================================
+     BUTTON MICRO INTERACTION
+  ===================================================== */
+
+  document
+    .querySelectorAll(".btn")
+    .forEach(function (button) {
+
+      button.addEventListener(
+        "mouseenter",
+        function () {
+
+          button.style.setProperty(
+            "--btn-x",
+            "4px"
+          );
+
+        }
+      );
+
+
+      button.addEventListener(
+        "mouseleave",
+        function () {
+
+          button.style.setProperty(
+            "--btn-x",
+            "0px"
+          );
+
+        }
+      );
+
+    });
 
 
 })();
