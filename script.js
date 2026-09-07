@@ -2,11 +2,42 @@
 
   "use strict";
 
+
   const reducedMotion =
     window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
+
+  /* ================= LOADER ================= */
+
+  const loader =
+    document.getElementById(
+      "pageLoader"
+    );
+
+  window.addEventListener(
+    "load",
+    function () {
+
+      window.setTimeout(
+        function () {
+
+          if (loader) {
+            loader.classList.add(
+              "loaded"
+            );
+          }
+
+        },
+        700
+      );
+
+    }
+  );
+
+
+  /* ================= ELEMENTS ================= */
 
   const header =
     document.getElementById(
@@ -38,12 +69,19 @@
       "heroPhoto"
     );
 
+  const heroParticles =
+    document.getElementById(
+      "heroParticles"
+    );
+
 
   /* ================= HEADER ================= */
 
-  function setHeader() {
+  function updateHeader() {
 
-    if (!header) return;
+    if (!header) {
+      return;
+    }
 
     header.classList.toggle(
       "scrolled",
@@ -52,11 +90,11 @@
 
   }
 
-  setHeader();
+  updateHeader();
 
   window.addEventListener(
     "scroll",
-    setHeader,
+    updateHeader,
     {
       passive: true
     }
@@ -124,22 +162,32 @@
   }
 
 
-  /* ================= CURSOR GLOW ================= */
+  /* ================= CURSOR ================= */
 
   if (
+    cursorGlow &&
     !reducedMotion &&
-    cursorGlow
+    window.matchMedia(
+      "(pointer:fine)"
+    ).matches
   ) {
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    let glowX = 0;
+    let glowY = 0;
+
 
     window.addEventListener(
       "pointermove",
       function (event) {
 
-        cursorGlow.style.left =
-          event.clientX + "px";
+        mouseX =
+          event.clientX;
 
-        cursorGlow.style.top =
-          event.clientY + "px";
+        mouseY =
+          event.clientY;
 
       },
       {
@@ -147,16 +195,141 @@
       }
     );
 
+
+    function animateGlow() {
+
+      glowX +=
+        (mouseX - glowX) *
+        0.09;
+
+      glowY +=
+        (mouseY - glowY) *
+        0.09;
+
+
+      cursorGlow.style.left =
+        glowX + "px";
+
+      cursorGlow.style.top =
+        glowY + "px";
+
+
+      requestAnimationFrame(
+        animateGlow
+      );
+
+    }
+
+    animateGlow();
+
   }
 
 
-  /* ================= HERO 3D PHOTO ================= */
+  /* ================= HERO PARTICLES ================= */
 
   if (
-    !reducedMotion &&
-    heroVisual &&
-    heroPhoto
+    heroParticles &&
+    !reducedMotion
   ) {
+
+    const amount =
+      window.innerWidth < 700
+        ? 18
+        : 38;
+
+
+    for (
+      let i = 0;
+      i < amount;
+      i++
+    ) {
+
+      const particle =
+        document.createElement(
+          "span"
+        );
+
+      particle.className =
+        "hero-particle";
+
+
+      particle.style.left =
+        Math.random() * 100 +
+        "%";
+
+      particle.style.top =
+        Math.random() * 100 +
+        "%";
+
+
+      particle.style.setProperty(
+        "--x",
+        (
+          Math.random() * 70 -
+          35
+        ) + "px"
+      );
+
+
+      particle.style.setProperty(
+        "--y",
+        (
+          Math.random() * 90 -
+          45
+        ) + "px"
+      );
+
+
+      particle.style.setProperty(
+        "--duration",
+        (
+          2.5 +
+          Math.random() * 4
+        ) + "s"
+      );
+
+
+      particle.style.animationDelay =
+        (
+          Math.random() * -5
+        ) + "s";
+
+
+      heroParticles.appendChild(
+        particle
+      );
+
+    }
+
+  }
+
+
+  /* ================= HERO 3D ================= */
+
+  if (
+    heroVisual &&
+    heroPhoto &&
+    !reducedMotion &&
+    window.matchMedia(
+      "(pointer:fine)"
+    ).matches
+  ) {
+
+    const orbits =
+      heroVisual.querySelectorAll(
+        ".visual-orbit"
+      );
+
+    const nodes =
+      heroVisual.querySelectorAll(
+        ".data-node"
+      );
+
+    const chips =
+      heroVisual.querySelectorAll(
+        ".parallax-item"
+      );
+
 
     heroVisual.addEventListener(
       "pointermove",
@@ -165,26 +338,100 @@
         const rect =
           heroVisual.getBoundingClientRect();
 
+
         const x =
-          (event.clientX - rect.left) /
+          (
+            event.clientX -
+            rect.left
+          ) /
           rect.width -
           0.5;
 
+
         const y =
-          (event.clientY - rect.top) /
+          (
+            event.clientY -
+            rect.top
+          ) /
           rect.height -
           0.5;
 
 
         heroPhoto.style.transform =
-          "translate(-50%, -50%) " +
+          "translate(-50%,-50%) " +
           "rotateY(" +
-          (-7 + x * 12) +
+          (
+            -8 +
+            x * 17
+          ) +
           "deg) " +
           "rotateX(" +
-          (3 - y * 10) +
+          (
+            4 -
+            y * 15
+          ) +
           "deg) " +
-          "translateZ(12px)";
+          "translateZ(18px)";
+
+
+        orbits.forEach(
+          function (
+            orbit,
+            index
+          ) {
+
+            const amount =
+              (index + 1) *
+              7;
+
+            orbit.style.marginLeft =
+              x * amount + "px";
+
+            orbit.style.marginTop =
+              y * amount + "px";
+
+          }
+        );
+
+
+        nodes.forEach(
+          function (
+            node,
+            index
+          ) {
+
+            const amount =
+              (index + 1) *
+              10;
+
+            node.style.marginLeft =
+              x * amount + "px";
+
+            node.style.marginTop =
+              y * amount + "px";
+
+          }
+        );
+
+
+        chips.forEach(
+          function (
+            chip,
+            index
+          ) {
+
+            const amount =
+              (index + 1) *
+              10;
+
+            chip.style.marginLeft =
+              x * amount + "px";
+
+            chip.style.marginTop =
+              y * amount + "px";
+
+          }
+        );
 
       }
     );
@@ -195,9 +442,48 @@
       function () {
 
         heroPhoto.style.transform =
-          "translate(-50%, -50%) " +
-          "rotateY(-7deg) " +
-          "rotateX(3deg)";
+          "translate(-50%,-50%) " +
+          "rotateY(-8deg) " +
+          "rotateX(4deg)";
+
+
+        orbits.forEach(
+          function (orbit) {
+
+            orbit.style.marginLeft =
+              "";
+
+            orbit.style.marginTop =
+              "";
+
+          }
+        );
+
+
+        nodes.forEach(
+          function (node) {
+
+            node.style.marginLeft =
+              "";
+
+            node.style.marginTop =
+              "";
+
+          }
+        );
+
+
+        chips.forEach(
+          function (chip) {
+
+            chip.style.marginLeft =
+              "";
+
+            chip.style.marginTop =
+              "";
+
+          }
+        );
 
       }
     );
@@ -205,7 +491,7 @@
   }
 
 
-  /* ================= SCROLL REVEAL ================= */
+  /* ================= REVEAL ================= */
 
   const revealElements =
     document.querySelectorAll(
@@ -234,9 +520,11 @@
                 return;
               }
 
+
               entry.target.classList.add(
                 "in-view"
               );
+
 
               observer.unobserve(
                 entry.target
@@ -247,19 +535,23 @@
 
         },
         {
-          threshold: 0.12
+          threshold: .1
         }
       );
 
 
     revealElements.forEach(
-      function (element, index) {
+      function (
+        element,
+        index
+      ) {
 
         element.style.transitionDelay =
           Math.min(
-            index * 35,
-            280
+            index * 45,
+            320
           ) + "ms";
+
 
         revealObserver.observe(
           element
@@ -283,7 +575,7 @@
   }
 
 
-  /* ================= ACTIVE NAV ================= */
+  /* ================= NAV ACTIVE ================= */
 
   const navLinks =
     document.querySelectorAll(
@@ -296,14 +588,21 @@
       .map(
         function (link) {
 
-          const id =
+          const href =
             link.getAttribute(
               "href"
             );
 
-          return id
-            ? document.querySelector(id)
-            : null;
+          if (
+            !href ||
+            href.charAt(0) !== "#"
+          ) {
+            return null;
+          }
+
+          return document.getElementById(
+            href.substring(1)
+          );
 
         }
       )
@@ -328,6 +627,10 @@
               }
 
 
+              const id =
+                entry.target.id;
+
+
               navLinks.forEach(
                 function (link) {
 
@@ -336,8 +639,7 @@
                     link.getAttribute(
                       "href"
                     ) ===
-                    "#" +
-                    entry.target.id
+                    "#" + id
                   );
 
                 }
@@ -369,57 +671,228 @@
   }
 
 
-  /* ================= MAGNETIC BUTTONS ================= */
+  /* ================= CARD TILT ================= */
+
+  if (
+    !reducedMotion &&
+    window.matchMedia(
+      "(pointer:fine)"
+    ).matches
+  ) {
+
+    document
+      .querySelectorAll(
+        ".interactive-card"
+      )
+      .forEach(
+        function (card) {
+
+          card.addEventListener(
+            "pointermove",
+            function (event) {
+
+              const rect =
+                card.getBoundingClientRect();
+
+
+              const x =
+                (
+                  event.clientX -
+                  rect.left
+                ) /
+                rect.width -
+                .5;
+
+
+              const y =
+                (
+                  event.clientY -
+                  rect.top
+                ) /
+                rect.height -
+                .5;
+
+
+              const rotateX =
+                -y * 3.5;
+
+              const rotateY =
+                x * 3.5;
+
+
+              card.style.transform =
+                "perspective(900px) " +
+                "rotateX(" +
+                rotateX +
+                "deg) " +
+                "rotateY(" +
+                rotateY +
+                "deg) " +
+                "translateY(-3px)";
+
+
+              card.style.setProperty(
+                "--mouse-x",
+                (
+                  event.clientX -
+                  rect.left
+                ) + "px"
+              );
+
+
+              card.style.setProperty(
+                "--mouse-y",
+                (
+                  event.clientY -
+                  rect.top
+                ) + "px"
+              );
+
+            }
+          );
+
+
+          card.addEventListener(
+            "pointerleave",
+            function () {
+
+              card.style.transform =
+                "";
+
+            }
+          );
+
+        }
+      );
+
+  }
+
+
+  /* ================= MAGNETIC ELEMENTS ================= */
+
+  if (
+    !reducedMotion &&
+    window.matchMedia(
+      "(pointer:fine)"
+    ).matches
+  ) {
+
+    document
+      .querySelectorAll(
+        ".magnetic"
+      )
+      .forEach(
+        function (element) {
+
+          element.addEventListener(
+            "pointermove",
+            function (event) {
+
+              const rect =
+                element.getBoundingClientRect();
+
+
+              const x =
+                event.clientX -
+                rect.left -
+                rect.width / 2;
+
+
+              const y =
+                event.clientY -
+                rect.top -
+                rect.height / 2;
+
+
+              element.style.transform =
+                "translate(" +
+                x * .055 +
+                "px," +
+                y * .055 +
+                "px)";
+
+            }
+          );
+
+
+          element.addEventListener(
+            "pointerleave",
+            function () {
+
+              element.style.transform =
+                "";
+
+            }
+          );
+
+        }
+      );
+
+  }
+
+
+  /* ================= SMOOTH ANCHORS ================= */
 
   document
     .querySelectorAll(
-      ".btn, .project-link, .contact-link"
+      'a[href^="#"]'
     )
     .forEach(
-      function (element) {
+      function (link) {
 
-        if (reducedMotion) {
-          return;
-        }
-
-
-        element.addEventListener(
-          "pointermove",
+        link.addEventListener(
+          "click",
           function (event) {
 
-            const rect =
-              element.getBoundingClientRect();
+            const id =
+              link.getAttribute(
+                "href"
+              );
+
+            if (
+              !id ||
+              id === "#"
+            ) {
+              return;
+            }
 
 
-            const x =
-              event.clientX -
-              rect.left -
-              rect.width / 2;
+            const target =
+              document.querySelector(
+                id
+              );
 
 
-            const y =
-              event.clientY -
-              rect.top -
-              rect.height / 2;
+            if (!target) {
+              return;
+            }
 
 
-            element.style.transform =
-              "translate(" +
-              x * 0.035 +
-              "px," +
-              y * 0.035 +
-              "px)";
-
-          }
-        );
+            event.preventDefault();
 
 
-        element.addEventListener(
-          "pointerleave",
-          function () {
+            const headerOffset =
+              82;
 
-            element.style.transform =
-              "";
+
+            const targetPosition =
+              target.getBoundingClientRect()
+                .top +
+              window.scrollY -
+              headerOffset;
+
+
+            window.scrollTo(
+              {
+                top:
+                  targetPosition,
+
+                behavior:
+                  reducedMotion
+                    ? "auto"
+                    : "smooth"
+              }
+            );
 
           }
         );
