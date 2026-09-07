@@ -1,62 +1,92 @@
 (function () {
+
   "use strict";
 
-  const reducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
+  const reducedMotion =
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
 
-  /* =====================================================
-     HEADER
-     ===================================================== */
+  const header =
+    document.getElementById(
+      "siteHeader"
+    );
 
-  const header = document.getElementById("siteHeader");
+  const navToggle =
+    document.getElementById(
+      "navToggle"
+    );
 
-  function updateHeader() {
+  const mobileMenu =
+    document.getElementById(
+      "mobileMenu"
+    );
+
+  const cursorGlow =
+    document.getElementById(
+      "cursorGlow"
+    );
+
+  const heroVisual =
+    document.getElementById(
+      "heroVisual"
+    );
+
+  const heroPhoto =
+    document.getElementById(
+      "heroPhoto"
+    );
+
+
+  /* ================= HEADER ================= */
+
+  function setHeader() {
+
     if (!header) return;
 
     header.classList.toggle(
       "scrolled",
-      window.scrollY > 30
+      window.scrollY > 20
     );
+
   }
+
+  setHeader();
 
   window.addEventListener(
     "scroll",
-    updateHeader,
-    { passive: true }
+    setHeader,
+    {
+      passive: true
+    }
   );
 
-  updateHeader();
 
+  /* ================= MOBILE MENU ================= */
 
-  /* =====================================================
-     MOBILE NAV
-     ===================================================== */
-
-  const navToggle =
-    document.getElementById("navToggle");
-
-  const mobileMenu =
-    document.getElementById("mobileMenu");
-
-  if (navToggle && mobileMenu) {
+  if (
+    navToggle &&
+    mobileMenu
+  ) {
 
     navToggle.addEventListener(
       "click",
       function () {
 
-        const isOpen =
-          mobileMenu.classList.toggle("open");
+        const open =
+          mobileMenu.classList.toggle(
+            "open"
+          );
 
         navToggle.classList.toggle(
           "open",
-          isOpen
+          open
         );
 
         navToggle.setAttribute(
           "aria-expanded",
-          String(isOpen)
+          String(open)
         );
 
       }
@@ -65,223 +95,109 @@
 
     mobileMenu
       .querySelectorAll("a")
-      .forEach(function (link) {
+      .forEach(
+        function (link) {
 
-        link.addEventListener(
-          "click",
-          function () {
+          link.addEventListener(
+            "click",
+            function () {
 
-            mobileMenu.classList.remove(
-              "open"
-            );
+              mobileMenu.classList.remove(
+                "open"
+              );
 
-            navToggle.classList.remove(
-              "open"
-            );
+              navToggle.classList.remove(
+                "open"
+              );
 
-            navToggle.setAttribute(
-              "aria-expanded",
-              "false"
-            );
-
-          }
-        );
-
-      });
-
-  }
-
-
-  /* =====================================================
-     ACTIVE NAV
-     ===================================================== */
-
-  const navLinks =
-    document.querySelectorAll(
-      "[data-nav]"
-    );
-
-  const sections = Array
-    .from(navLinks)
-    .map(function (link) {
-
-      const href =
-        link.getAttribute("href");
-
-      if (!href || !href.startsWith("#")) {
-        return null;
-      }
-
-      return document.getElementById(
-        href.substring(1)
-      );
-
-    })
-    .filter(Boolean);
-
-
-  if (
-    "IntersectionObserver" in window &&
-    sections.length
-  ) {
-
-    const observer =
-      new IntersectionObserver(
-        function (entries) {
-
-          entries.forEach(
-            function (entry) {
-
-              if (!entry.isIntersecting) {
-                return;
-              }
-
-              const currentId =
-                entry.target.id;
-
-              navLinks.forEach(
-                function (link) {
-
-                  link.classList.toggle(
-                    "active",
-                    link.getAttribute("href") ===
-                    "#" + currentId
-                  );
-
-                }
+              navToggle.setAttribute(
+                "aria-expanded",
+                "false"
               );
 
             }
           );
 
-        },
-        {
-          rootMargin:
-            "-35% 0px -55% 0px",
-          threshold: 0
         }
       );
 
-
-    sections.forEach(function (section) {
-      observer.observe(section);
-    });
-
   }
 
 
-  /* =====================================================
-     CURSOR GLOW
-     ===================================================== */
-
-  const cursorGlow =
-    document.querySelector(".cursor-glow");
+  /* ================= CURSOR GLOW ================= */
 
   if (
-    cursorGlow &&
     !reducedMotion &&
-    window.matchMedia("(pointer: fine)").matches
+    cursorGlow
   ) {
-
-    let mouseX = 0;
-    let mouseY = 0;
-
-    let glowX = 0;
-    let glowY = 0;
 
     window.addEventListener(
-      "mousemove",
+      "pointermove",
       function (event) {
 
-        mouseX = event.clientX;
-        mouseY = event.clientY;
+        cursorGlow.style.left =
+          event.clientX + "px";
+
+        cursorGlow.style.top =
+          event.clientY + "px";
 
       },
-      { passive: true }
+      {
+        passive: true
+      }
     );
-
-
-    function animateGlow() {
-
-      glowX +=
-        (mouseX - glowX) * 0.12;
-
-      glowY +=
-        (mouseY - glowY) * 0.12;
-
-      cursorGlow.style.left =
-        glowX + "px";
-
-      cursorGlow.style.top =
-        glowY + "px";
-
-      requestAnimationFrame(
-        animateGlow
-      );
-
-    }
-
-    animateGlow();
 
   }
 
 
-  /* =====================================================
-     INTERACTIVE PROFILE PHOTO
-     ===================================================== */
-
-  const photoCard =
-    document.getElementById("photoCard");
-
+  /* ================= HERO 3D PHOTO ================= */
 
   if (
-    photoCard &&
     !reducedMotion &&
-    window.matchMedia("(pointer: fine)").matches
+    heroVisual &&
+    heroPhoto
   ) {
 
-    photoCard.addEventListener(
-      "mousemove",
+    heroVisual.addEventListener(
+      "pointermove",
       function (event) {
 
         const rect =
-          photoCard.getBoundingClientRect();
+          heroVisual.getBoundingClientRect();
 
         const x =
-          event.clientX - rect.left;
+          (event.clientX - rect.left) /
+          rect.width -
+          0.5;
 
         const y =
-          event.clientY - rect.top;
+          (event.clientY - rect.top) /
+          rect.height -
+          0.5;
 
-        const centerX =
-          rect.width / 2;
 
-        const centerY =
-          rect.height / 2;
-
-        const rotateY =
-          ((x - centerX) / centerX) * 7;
-
-        const rotateX =
-          ((centerY - y) / centerY) * 7;
-
-        photoCard.style.transform =
+        heroPhoto.style.transform =
+          "translate(-50%, -50%) " +
+          "rotateY(" +
+          (-7 + x * 12) +
+          "deg) " +
           "rotateX(" +
-          rotateX +
-          "deg) rotateY(" +
-          rotateY +
-          "deg) translateZ(10px)";
+          (3 - y * 10) +
+          "deg) " +
+          "translateZ(12px)";
 
       }
     );
 
 
-    photoCard.addEventListener(
-      "mouseleave",
+    heroVisual.addEventListener(
+      "pointerleave",
       function () {
 
-        photoCard.style.transform =
-          "rotateX(0deg) rotateY(0deg) translateZ(0)";
+        heroPhoto.style.transform =
+          "translate(-50%, -50%) " +
+          "rotateY(-7deg) " +
+          "rotateX(3deg)";
 
       }
     );
@@ -289,95 +205,12 @@
   }
 
 
-  /* =====================================================
-     MAGNETIC BUTTONS
-     ===================================================== */
+  /* ================= SCROLL REVEAL ================= */
 
-  const magneticElements =
-    document.querySelectorAll(".magnetic");
-
-
-  if (
-    !reducedMotion &&
-    window.matchMedia("(pointer: fine)").matches
-  ) {
-
-    magneticElements.forEach(
-      function (element) {
-
-        element.addEventListener(
-          "mousemove",
-          function (event) {
-
-            const rect =
-              element.getBoundingClientRect();
-
-            const x =
-              event.clientX -
-              rect.left -
-              rect.width / 2;
-
-            const y =
-              event.clientY -
-              rect.top -
-              rect.height / 2;
-
-            element.style.transform =
-              "translate(" +
-              x * 0.08 +
-              "px, " +
-              y * 0.08 +
-              "px)";
-
-          }
-        );
-
-
-        element.addEventListener(
-          "mouseleave",
-          function () {
-
-            element.style.transform =
-              "";
-
-          }
-        );
-
-      }
-    );
-
-  }
-
-
-  /* =====================================================
-     REVEAL ON SCROLL
-     ===================================================== */
-
-  const revealTargets =
+  const revealElements =
     document.querySelectorAll(
-      ".skill-card, " +
-      ".education-card, " +
-      ".experience-item, " +
-      ".service-card, " +
-      ".project-card, " +
-      ".milestone, " +
-      ".testimonial-placeholder, " +
-      ".usp-card, " +
-      ".about-main, " +
-      ".stat"
+      ".reveal"
     );
-
-
-  revealTargets.forEach(
-    function (element) {
-
-      element.setAttribute(
-        "data-reveal",
-        ""
-      );
-
-    }
-  );
 
 
   if (
@@ -387,12 +220,17 @@
 
     const revealObserver =
       new IntersectionObserver(
-        function (entries, observer) {
+        function (
+          entries,
+          observer
+        ) {
 
           entries.forEach(
             function (entry) {
 
-              if (!entry.isIntersecting) {
+              if (
+                !entry.isIntersecting
+              ) {
                 return;
               }
 
@@ -409,78 +247,34 @@
 
         },
         {
-          threshold: 0.08
+          threshold: 0.12
         }
       );
 
 
-    document
-      .querySelectorAll("[data-reveal]")
-      .forEach(function (element) {
+    revealElements.forEach(
+      function (element, index) {
+
+        element.style.transitionDelay =
+          Math.min(
+            index * 35,
+            280
+          ) + "ms";
 
         revealObserver.observe(
           element
         );
 
-      });
+      }
+    );
 
   } else {
 
-    document
-      .querySelectorAll("[data-reveal]")
-      .forEach(function (element) {
+    revealElements.forEach(
+      function (element) {
 
         element.classList.add(
           "in-view"
-        );
-
-      });
-
-  }
-
-
-  /* =====================================================
-     SKILL CARD POINTER EFFECT
-     ===================================================== */
-
-  const cards =
-    document.querySelectorAll(
-      ".skill-card, .service-card, .project-card"
-    );
-
-
-  if (
-    !reducedMotion &&
-    window.matchMedia("(pointer: fine)").matches
-  ) {
-
-    cards.forEach(
-      function (card) {
-
-        card.addEventListener(
-          "mousemove",
-          function (event) {
-
-            const rect =
-              card.getBoundingClientRect();
-
-            const x =
-              event.clientX - rect.left;
-
-            const y =
-              event.clientY - rect.top;
-
-            card.style.setProperty(
-              "--mouse-x",
-              x + "px"
-            );
-
-            card.style.setProperty(
-              "--mouse-y",
-              y + "px"
-            );
-
-          }
         );
 
       }
@@ -489,36 +283,177 @@
   }
 
 
-  /* =====================================================
-     RESIZE
-     ===================================================== */
+  /* ================= ACTIVE NAV ================= */
+
+  const navLinks =
+    document.querySelectorAll(
+      "[data-nav]"
+    );
+
+
+  const sections =
+    Array.from(navLinks)
+      .map(
+        function (link) {
+
+          const id =
+            link.getAttribute(
+              "href"
+            );
+
+          return id
+            ? document.querySelector(id)
+            : null;
+
+        }
+      )
+      .filter(Boolean);
+
+
+  if (
+    "IntersectionObserver" in window
+  ) {
+
+    const navObserver =
+      new IntersectionObserver(
+        function (entries) {
+
+          entries.forEach(
+            function (entry) {
+
+              if (
+                !entry.isIntersecting
+              ) {
+                return;
+              }
+
+
+              navLinks.forEach(
+                function (link) {
+
+                  link.classList.toggle(
+                    "active",
+                    link.getAttribute(
+                      "href"
+                    ) ===
+                    "#" +
+                    entry.target.id
+                  );
+
+                }
+              );
+
+            }
+          );
+
+        },
+        {
+          rootMargin:
+            "-35% 0px -55% 0px",
+
+          threshold: 0
+        }
+      );
+
+
+    sections.forEach(
+      function (section) {
+
+        navObserver.observe(
+          section
+        );
+
+      }
+    );
+
+  }
+
+
+  /* ================= MAGNETIC BUTTONS ================= */
+
+  document
+    .querySelectorAll(
+      ".btn, .project-link, .contact-link"
+    )
+    .forEach(
+      function (element) {
+
+        if (reducedMotion) {
+          return;
+        }
+
+
+        element.addEventListener(
+          "pointermove",
+          function (event) {
+
+            const rect =
+              element.getBoundingClientRect();
+
+
+            const x =
+              event.clientX -
+              rect.left -
+              rect.width / 2;
+
+
+            const y =
+              event.clientY -
+              rect.top -
+              rect.height / 2;
+
+
+            element.style.transform =
+              "translate(" +
+              x * 0.035 +
+              "px," +
+              y * 0.035 +
+              "px)";
+
+          }
+        );
+
+
+        element.addEventListener(
+          "pointerleave",
+          function () {
+
+            element.style.transform =
+              "";
+
+          }
+        );
+
+      }
+    );
+
+
+  /* ================= RESIZE ================= */
 
   window.addEventListener(
     "resize",
     function () {
 
       if (
-        window.innerWidth > 1050 &&
+        window.innerWidth > 860 &&
         mobileMenu &&
-        mobileMenu.classList.contains("open")
+        mobileMenu.classList.contains(
+          "open"
+        )
       ) {
 
         mobileMenu.classList.remove(
           "open"
         );
 
-        if (navToggle) {
+        navToggle.classList.remove(
+          "open"
+        );
 
-          navToggle.classList.remove(
-            "open"
-          );
-
-          navToggle.setAttribute(
-            "aria-expanded",
-            "false"
-          );
-
-        }
+        navToggle.setAttribute(
+          "aria-expanded",
+          "false"
+        );
 
       }
 
