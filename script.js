@@ -1,27 +1,44 @@
 (function () {
-
   "use strict";
 
-
-  /* =====================================================
-     REDUCED MOTION
-  ===================================================== */
-
-  var prefersReducedMotion = window.matchMedia(
+  const reducedMotion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
 
   /* =====================================================
-     MOBILE NAVIGATION
-  ===================================================== */
+     HEADER
+     ===================================================== */
 
-  var navToggle =
+  const header = document.getElementById("siteHeader");
+
+  function updateHeader() {
+    if (!header) return;
+
+    header.classList.toggle(
+      "scrolled",
+      window.scrollY > 30
+    );
+  }
+
+  window.addEventListener(
+    "scroll",
+    updateHeader,
+    { passive: true }
+  );
+
+  updateHeader();
+
+
+  /* =====================================================
+     MOBILE NAV
+     ===================================================== */
+
+  const navToggle =
     document.getElementById("navToggle");
 
-  var mobileMenu =
+  const mobileMenu =
     document.getElementById("mobileMenu");
-
 
   if (navToggle && mobileMenu) {
 
@@ -29,17 +46,17 @@
       "click",
       function () {
 
-        var isOpen =
+        const isOpen =
           mobileMenu.classList.toggle("open");
-
-        navToggle.setAttribute(
-          "aria-expanded",
-          String(isOpen)
-        );
 
         navToggle.classList.toggle(
           "open",
           isOpen
+        );
+
+        navToggle.setAttribute(
+          "aria-expanded",
+          String(isOpen)
         );
 
       }
@@ -76,38 +93,31 @@
 
 
   /* =====================================================
-     ACTIVE NAVIGATION
-  ===================================================== */
+     ACTIVE NAV
+     ===================================================== */
 
-  var navLinks =
+  const navLinks =
     document.querySelectorAll(
       "[data-nav]"
     );
 
+  const sections = Array
+    .from(navLinks)
+    .map(function (link) {
 
-  var sections =
-    Array.prototype.slice
-      .call(navLinks)
-      .map(function (link) {
+      const href =
+        link.getAttribute("href");
 
-        var href =
-          link.getAttribute("href");
+      if (!href || !href.startsWith("#")) {
+        return null;
+      }
 
+      return document.getElementById(
+        href.substring(1)
+      );
 
-        if (
-          !href ||
-          href.charAt(0) !== "#"
-        ) {
-          return null;
-        }
-
-
-        return document.getElementById(
-          href.substring(1)
-        );
-
-      })
-      .filter(Boolean);
+    })
+    .filter(Boolean);
 
 
   if (
@@ -115,39 +125,31 @@
     sections.length
   ) {
 
-    var navObserver =
+    const observer =
       new IntersectionObserver(
         function (entries) {
 
           entries.forEach(
             function (entry) {
 
-              if (
-                entry.isIntersecting
-              ) {
-
-                var id =
-                  entry.target.id;
-
-
-                navLinks.forEach(
-                  function (link) {
-
-                    var match =
-                      link.getAttribute(
-                        "href"
-                      ) === "#" + id;
-
-
-                    link.classList.toggle(
-                      "active",
-                      match
-                    );
-
-                  }
-                );
-
+              if (!entry.isIntersecting) {
+                return;
               }
+
+              const currentId =
+                entry.target.id;
+
+              navLinks.forEach(
+                function (link) {
+
+                  link.classList.toggle(
+                    "active",
+                    link.getAttribute("href") ===
+                    "#" + currentId
+                  );
+
+                }
+              );
 
             }
           );
@@ -156,17 +158,189 @@
         {
           rootMargin:
             "-35% 0px -55% 0px",
-
           threshold: 0
         }
       );
 
 
-    sections.forEach(
-      function (section) {
+    sections.forEach(function (section) {
+      observer.observe(section);
+    });
 
-        navObserver.observe(
-          section
+  }
+
+
+  /* =====================================================
+     CURSOR GLOW
+     ===================================================== */
+
+  const cursorGlow =
+    document.querySelector(".cursor-glow");
+
+  if (
+    cursorGlow &&
+    !reducedMotion &&
+    window.matchMedia("(pointer: fine)").matches
+  ) {
+
+    let mouseX = 0;
+    let mouseY = 0;
+
+    let glowX = 0;
+    let glowY = 0;
+
+    window.addEventListener(
+      "mousemove",
+      function (event) {
+
+        mouseX = event.clientX;
+        mouseY = event.clientY;
+
+      },
+      { passive: true }
+    );
+
+
+    function animateGlow() {
+
+      glowX +=
+        (mouseX - glowX) * 0.12;
+
+      glowY +=
+        (mouseY - glowY) * 0.12;
+
+      cursorGlow.style.left =
+        glowX + "px";
+
+      cursorGlow.style.top =
+        glowY + "px";
+
+      requestAnimationFrame(
+        animateGlow
+      );
+
+    }
+
+    animateGlow();
+
+  }
+
+
+  /* =====================================================
+     INTERACTIVE PROFILE PHOTO
+     ===================================================== */
+
+  const photoCard =
+    document.getElementById("photoCard");
+
+
+  if (
+    photoCard &&
+    !reducedMotion &&
+    window.matchMedia("(pointer: fine)").matches
+  ) {
+
+    photoCard.addEventListener(
+      "mousemove",
+      function (event) {
+
+        const rect =
+          photoCard.getBoundingClientRect();
+
+        const x =
+          event.clientX - rect.left;
+
+        const y =
+          event.clientY - rect.top;
+
+        const centerX =
+          rect.width / 2;
+
+        const centerY =
+          rect.height / 2;
+
+        const rotateY =
+          ((x - centerX) / centerX) * 7;
+
+        const rotateX =
+          ((centerY - y) / centerY) * 7;
+
+        photoCard.style.transform =
+          "rotateX(" +
+          rotateX +
+          "deg) rotateY(" +
+          rotateY +
+          "deg) translateZ(10px)";
+
+      }
+    );
+
+
+    photoCard.addEventListener(
+      "mouseleave",
+      function () {
+
+        photoCard.style.transform =
+          "rotateX(0deg) rotateY(0deg) translateZ(0)";
+
+      }
+    );
+
+  }
+
+
+  /* =====================================================
+     MAGNETIC BUTTONS
+     ===================================================== */
+
+  const magneticElements =
+    document.querySelectorAll(".magnetic");
+
+
+  if (
+    !reducedMotion &&
+    window.matchMedia("(pointer: fine)").matches
+  ) {
+
+    magneticElements.forEach(
+      function (element) {
+
+        element.addEventListener(
+          "mousemove",
+          function (event) {
+
+            const rect =
+              element.getBoundingClientRect();
+
+            const x =
+              event.clientX -
+              rect.left -
+              rect.width / 2;
+
+            const y =
+              event.clientY -
+              rect.top -
+              rect.height / 2;
+
+            element.style.transform =
+              "translate(" +
+              x * 0.08 +
+              "px, " +
+              y * 0.08 +
+              "px)";
+
+          }
+        );
+
+
+        element.addEventListener(
+          "mouseleave",
+          function () {
+
+            element.style.transform =
+              "";
+
+          }
         );
 
       }
@@ -176,20 +350,21 @@
 
 
   /* =====================================================
-     SCROLL REVEAL
-  ===================================================== */
+     REVEAL ON SCROLL
+     ===================================================== */
 
-  var revealTargets =
+  const revealTargets =
     document.querySelectorAll(
-      ".service-card, " +
-      ".tech-card, " +
-      ".project-card, " +
-      ".timeline-item, " +
+      ".skill-card, " +
       ".education-card, " +
-      ".achievement-card, " +
+      ".experience-item, " +
+      ".service-card, " +
+      ".project-card, " +
+      ".milestone, " +
       ".testimonial-placeholder, " +
       ".usp-card, " +
-      ".contact-box"
+      ".about-main, " +
+      ".stat"
     );
 
 
@@ -206,32 +381,28 @@
 
 
   if (
-    "IntersectionObserver" in window
+    "IntersectionObserver" in window &&
+    !reducedMotion
   ) {
 
-    var revealObserver =
+    const revealObserver =
       new IntersectionObserver(
-        function (
-          entries,
-          observer
-        ) {
+        function (entries, observer) {
 
           entries.forEach(
             function (entry) {
 
-              if (
-                entry.isIntersecting
-              ) {
-
-                entry.target.classList.add(
-                  "in-view"
-                );
-
-                observer.unobserve(
-                  entry.target
-                );
-
+              if (!entry.isIntersecting) {
+                return;
               }
+
+              entry.target.classList.add(
+                "in-view"
+              );
+
+              observer.unobserve(
+                entry.target
+              );
 
             }
           );
@@ -244,190 +415,73 @@
 
 
     document
-      .querySelectorAll(
-        "[data-reveal]"
-      )
-      .forEach(
-        function (element) {
+      .querySelectorAll("[data-reveal]")
+      .forEach(function (element) {
 
-          revealObserver.observe(
-            element
-          );
+        revealObserver.observe(
+          element
+        );
 
-        }
-      );
+      });
 
   } else {
 
     document
-      .querySelectorAll(
-        "[data-reveal]"
-      )
-      .forEach(
-        function (element) {
+      .querySelectorAll("[data-reveal]")
+      .forEach(function (element) {
 
-          element.classList.add(
-            "in-view"
-          );
+        element.classList.add(
+          "in-view"
+        );
 
-        }
-      );
+      });
 
   }
 
 
   /* =====================================================
-     INTERACTIVE HERO IMAGE
-  ===================================================== */
+     SKILL CARD POINTER EFFECT
+     ===================================================== */
 
-  var heroPhoto =
-    document.getElementById(
-      "heroPhoto"
+  const cards =
+    document.querySelectorAll(
+      ".skill-card, .service-card, .project-card"
     );
 
 
   if (
-    heroPhoto &&
-    !prefersReducedMotion
+    !reducedMotion &&
+    window.matchMedia("(pointer: fine)").matches
   ) {
 
-    var photoFrame =
-      heroPhoto.querySelector(
-        ".photo-frame"
-      );
+    cards.forEach(
+      function (card) {
 
+        card.addEventListener(
+          "mousemove",
+          function (event) {
 
-    var floatingTechs =
-      heroPhoto.querySelectorAll(
-        ".floating-tech"
-      );
+            const rect =
+              card.getBoundingClientRect();
 
+            const x =
+              event.clientX - rect.left;
 
-    var targetX = 0;
-    var targetY = 0;
+            const y =
+              event.clientY - rect.top;
 
-    var currentX = 0;
-    var currentY = 0;
+            card.style.setProperty(
+              "--mouse-x",
+              x + "px"
+            );
 
+            card.style.setProperty(
+              "--mouse-y",
+              y + "px"
+            );
 
-    heroPhoto.addEventListener(
-      "mousemove",
-      function (event) {
-
-        var rect =
-          heroPhoto.getBoundingClientRect();
-
-
-        var x =
-          (event.clientX - rect.left)
-          / rect.width;
-
-
-        var y =
-          (event.clientY - rect.top)
-          / rect.height;
-
-
-        targetY =
-          (x - 0.5) * 12;
-
-
-        targetX =
-          (y - 0.5) * -12;
-
-      }
-    );
-
-
-    heroPhoto.addEventListener(
-      "mouseleave",
-      function () {
-
-        targetX = 0;
-        targetY = 0;
-
-      }
-    );
-
-
-    function animatePhoto() {
-
-      currentX +=
-        (targetX - currentX)
-        * 0.08;
-
-
-      currentY +=
-        (targetY - currentY)
-        * 0.08;
-
-
-      if (photoFrame) {
-
-        photoFrame.style.transform =
-          "rotateX(" +
-          currentX +
-          "deg) rotateY(" +
-          currentY +
-          "deg)";
-
-      }
-
-
-      floatingTechs.forEach(
-        function (element, index) {
-
-          var depth =
-            (index + 1) * 1.4;
-
-
-          element.style.transform =
-            "translate3d(" +
-            currentY * depth +
-            "px," +
-            currentX * depth +
-            "px,0)";
-
-        }
-      );
-
-
-      window.requestAnimationFrame(
-        animatePhoto
-      );
-
-    }
-
-
-    animatePhoto();
-
-  }
-
-
-  /* =====================================================
-     GLOBAL CURSOR GLOW
-  ===================================================== */
-
-  var cursorGlow =
-    document.querySelector(
-      ".cursor-glow"
-    );
-
-
-  if (
-    cursorGlow &&
-    !prefersReducedMotion
-  ) {
-
-    document.addEventListener(
-      "mousemove",
-      function (event) {
-
-        cursorGlow.style.left =
-          event.clientX + "px";
-
-        cursorGlow.style.top =
-          event.clientY + "px";
+          }
+        );
 
       }
     );
@@ -436,25 +490,22 @@
 
 
   /* =====================================================
-     MOBILE MENU CLOSE ON RESIZE
-  ===================================================== */
+     RESIZE
+     ===================================================== */
 
   window.addEventListener(
     "resize",
     function () {
 
       if (
-        window.innerWidth > 900 &&
+        window.innerWidth > 1050 &&
         mobileMenu &&
-        mobileMenu.classList.contains(
-          "open"
-        )
+        mobileMenu.classList.contains("open")
       ) {
 
         mobileMenu.classList.remove(
           "open"
         );
-
 
         if (navToggle) {
 
@@ -473,42 +524,5 @@
 
     }
   );
-
-
-  /* =====================================================
-     BUTTON MICRO INTERACTION
-  ===================================================== */
-
-  document
-    .querySelectorAll(".btn")
-    .forEach(function (button) {
-
-      button.addEventListener(
-        "mouseenter",
-        function () {
-
-          button.style.setProperty(
-            "--btn-x",
-            "4px"
-          );
-
-        }
-      );
-
-
-      button.addEventListener(
-        "mouseleave",
-        function () {
-
-          button.style.setProperty(
-            "--btn-x",
-            "0px"
-          );
-
-        }
-      );
-
-    });
-
 
 })();
