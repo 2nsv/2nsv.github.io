@@ -1,936 +1,248 @@
-(function () {
+document.addEventListener("DOMContentLoaded", () => {
 
-  "use strict";
+    /* =========================
+       HEADER
+    ========================= */
 
+    const header = document.getElementById("header");
 
-  const reducedMotion =
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-
-  /* ================= LOADER ================= */
-
-  const loader =
-    document.getElementById(
-      "pageLoader"
-    );
-
-  window.addEventListener(
-    "load",
-    function () {
-
-      window.setTimeout(
-        function () {
-
-          if (loader) {
-            loader.classList.add(
-              "loaded"
-            );
-          }
-
-        },
-        700
-      );
-
-    }
-  );
-
-
-  /* ================= ELEMENTS ================= */
-
-  const header =
-    document.getElementById(
-      "siteHeader"
-    );
-
-  const navToggle =
-    document.getElementById(
-      "navToggle"
-    );
-
-  const mobileMenu =
-    document.getElementById(
-      "mobileMenu"
-    );
-
-  const cursorGlow =
-    document.getElementById(
-      "cursorGlow"
-    );
-
-  const heroVisual =
-    document.getElementById(
-      "heroVisual"
-    );
-
-  const heroPhoto =
-    document.getElementById(
-      "heroPhoto"
-    );
-
-  const heroParticles =
-    document.getElementById(
-      "heroParticles"
-    );
-
-
-  /* ================= HEADER ================= */
-
-  function updateHeader() {
-
-    if (!header) {
-      return;
-    }
-
-    header.classList.toggle(
-      "scrolled",
-      window.scrollY > 20
-    );
-
-  }
-
-  updateHeader();
-
-  window.addEventListener(
-    "scroll",
-    updateHeader,
-    {
-      passive: true
-    }
-  );
-
-
-  /* ================= MOBILE MENU ================= */
-
-  if (
-    navToggle &&
-    mobileMenu
-  ) {
-
-    navToggle.addEventListener(
-      "click",
-      function () {
-
-        const open =
-          mobileMenu.classList.toggle(
-            "open"
-          );
-
-        navToggle.classList.toggle(
-          "open",
-          open
-        );
-
-        navToggle.setAttribute(
-          "aria-expanded",
-          String(open)
-        );
-
-      }
-    );
-
-
-    mobileMenu
-      .querySelectorAll("a")
-      .forEach(
-        function (link) {
-
-          link.addEventListener(
-            "click",
-            function () {
-
-              mobileMenu.classList.remove(
-                "open"
-              );
-
-              navToggle.classList.remove(
-                "open"
-              );
-
-              navToggle.setAttribute(
-                "aria-expanded",
-                "false"
-              );
-
-            }
-          );
-
+    function handleHeader() {
+        if (window.scrollY > 30) {
+            header.classList.add("scrolled");
+        } else {
+            header.classList.remove("scrolled");
         }
-      );
-
-  }
-
-
-  /* ================= CURSOR ================= */
-
-  if (
-    cursorGlow &&
-    !reducedMotion &&
-    window.matchMedia(
-      "(pointer:fine)"
-    ).matches
-  ) {
-
-    let mouseX = 0;
-    let mouseY = 0;
-
-    let glowX = 0;
-    let glowY = 0;
-
-
-    window.addEventListener(
-      "pointermove",
-      function (event) {
-
-        mouseX =
-          event.clientX;
-
-        mouseY =
-          event.clientY;
-
-      },
-      {
-        passive: true
-      }
-    );
-
-
-    function animateGlow() {
-
-      glowX +=
-        (mouseX - glowX) *
-        0.09;
-
-      glowY +=
-        (mouseY - glowY) *
-        0.09;
-
-
-      cursorGlow.style.left =
-        glowX + "px";
-
-      cursorGlow.style.top =
-        glowY + "px";
-
-
-      requestAnimationFrame(
-        animateGlow
-      );
-
     }
 
-    animateGlow();
-
-  }
-
-
-  /* ================= HERO PARTICLES ================= */
-
-  if (
-    heroParticles &&
-    !reducedMotion
-  ) {
-
-    const amount =
-      window.innerWidth < 700
-        ? 18
-        : 38;
+    window.addEventListener("scroll", handleHeader);
+    handleHeader();
 
 
-    for (
-      let i = 0;
-      i < amount;
-      i++
-    ) {
+    /* =========================
+       MOBILE MENU
+    ========================= */
 
-      const particle =
-        document.createElement(
-          "span"
-        );
+    const menuBtn = document.getElementById("menuBtn");
+    const nav = document.getElementById("nav");
 
-      particle.className =
-        "hero-particle";
+    if (menuBtn && nav) {
 
+        menuBtn.addEventListener("click", () => {
+            nav.classList.toggle("open");
+        });
 
-      particle.style.left =
-        Math.random() * 100 +
-        "%";
+        nav.querySelectorAll("a").forEach(link => {
 
-      particle.style.top =
-        Math.random() * 100 +
-        "%";
+            link.addEventListener("click", () => {
+                nav.classList.remove("open");
+            });
 
-
-      particle.style.setProperty(
-        "--x",
-        (
-          Math.random() * 70 -
-          35
-        ) + "px"
-      );
-
-
-      particle.style.setProperty(
-        "--y",
-        (
-          Math.random() * 90 -
-          45
-        ) + "px"
-      );
-
-
-      particle.style.setProperty(
-        "--duration",
-        (
-          2.5 +
-          Math.random() * 4
-        ) + "s"
-      );
-
-
-      particle.style.animationDelay =
-        (
-          Math.random() * -5
-        ) + "s";
-
-
-      heroParticles.appendChild(
-        particle
-      );
-
+        });
     }
 
-  }
 
+    /* =========================
+       REVEAL ON SCROLL
+    ========================= */
 
-  /* ================= HERO 3D ================= */
+    const revealElements = document.querySelectorAll(".reveal");
 
-  if (
-    heroVisual &&
-    heroPhoto &&
-    !reducedMotion &&
-    window.matchMedia(
-      "(pointer:fine)"
-    ).matches
-  ) {
+    const revealObserver = new IntersectionObserver(
+        (entries, observer) => {
 
-    const orbits =
-      heroVisual.querySelectorAll(
-        ".visual-orbit"
-      );
+            entries.forEach(entry => {
 
-    const nodes =
-      heroVisual.querySelectorAll(
-        ".data-node"
-      );
+                if (entry.isIntersecting) {
 
-    const chips =
-      heroVisual.querySelectorAll(
-        ".parallax-item"
-      );
+                    entry.target.classList.add("visible");
 
-
-    heroVisual.addEventListener(
-      "pointermove",
-      function (event) {
-
-        const rect =
-          heroVisual.getBoundingClientRect();
-
-
-        const x =
-          (
-            event.clientX -
-            rect.left
-          ) /
-          rect.width -
-          0.5;
-
-
-        const y =
-          (
-            event.clientY -
-            rect.top
-          ) /
-          rect.height -
-          0.5;
-
-
-        heroPhoto.style.transform =
-          "translate(-50%,-50%) " +
-          "rotateY(" +
-          (
-            -8 +
-            x * 17
-          ) +
-          "deg) " +
-          "rotateX(" +
-          (
-            4 -
-            y * 15
-          ) +
-          "deg) " +
-          "translateZ(18px)";
-
-
-        orbits.forEach(
-          function (
-            orbit,
-            index
-          ) {
-
-            const amount =
-              (index + 1) *
-              7;
-
-            orbit.style.marginLeft =
-              x * amount + "px";
-
-            orbit.style.marginTop =
-              y * amount + "px";
-
-          }
-        );
-
-
-        nodes.forEach(
-          function (
-            node,
-            index
-          ) {
-
-            const amount =
-              (index + 1) *
-              10;
-
-            node.style.marginLeft =
-              x * amount + "px";
-
-            node.style.marginTop =
-              y * amount + "px";
-
-          }
-        );
-
-
-        chips.forEach(
-          function (
-            chip,
-            index
-          ) {
-
-            const amount =
-              (index + 1) *
-              10;
-
-            chip.style.marginLeft =
-              x * amount + "px";
-
-            chip.style.marginTop =
-              y * amount + "px";
-
-          }
-        );
-
-      }
-    );
-
-
-    heroVisual.addEventListener(
-      "pointerleave",
-      function () {
-
-        heroPhoto.style.transform =
-          "translate(-50%,-50%) " +
-          "rotateY(-8deg) " +
-          "rotateX(4deg)";
-
-
-        orbits.forEach(
-          function (orbit) {
-
-            orbit.style.marginLeft =
-              "";
-
-            orbit.style.marginTop =
-              "";
-
-          }
-        );
-
-
-        nodes.forEach(
-          function (node) {
-
-            node.style.marginLeft =
-              "";
-
-            node.style.marginTop =
-              "";
-
-          }
-        );
-
-
-        chips.forEach(
-          function (chip) {
-
-            chip.style.marginLeft =
-              "";
-
-            chip.style.marginTop =
-              "";
-
-          }
-        );
-
-      }
-    );
-
-  }
-
-
-  /* ================= REVEAL ================= */
-
-  const revealElements =
-    document.querySelectorAll(
-      ".reveal"
-    );
-
-
-  if (
-    "IntersectionObserver" in window &&
-    !reducedMotion
-  ) {
-
-    const revealObserver =
-      new IntersectionObserver(
-        function (
-          entries,
-          observer
-        ) {
-
-          entries.forEach(
-            function (entry) {
-
-              if (
-                !entry.isIntersecting
-              ) {
-                return;
-              }
-
-
-              entry.target.classList.add(
-                "in-view"
-              );
-
-
-              observer.unobserve(
-                entry.target
-              );
-
-            }
-          );
-
-        },
-        {
-          threshold: .1
-        }
-      );
-
-
-    revealElements.forEach(
-      function (
-        element,
-        index
-      ) {
-
-        element.style.transitionDelay =
-          Math.min(
-            index * 45,
-            320
-          ) + "ms";
-
-
-        revealObserver.observe(
-          element
-        );
-
-      }
-    );
-
-  } else {
-
-    revealElements.forEach(
-      function (element) {
-
-        element.classList.add(
-          "in-view"
-        );
-
-      }
-    );
-
-  }
-
-
-  /* ================= NAV ACTIVE ================= */
-
-  const navLinks =
-    document.querySelectorAll(
-      "[data-nav]"
-    );
-
-
-  const sections =
-    Array.from(navLinks)
-      .map(
-        function (link) {
-
-          const href =
-            link.getAttribute(
-              "href"
-            );
-
-          if (
-            !href ||
-            href.charAt(0) !== "#"
-          ) {
-            return null;
-          }
-
-          return document.getElementById(
-            href.substring(1)
-          );
-
-        }
-      )
-      .filter(Boolean);
-
-
-  if (
-    "IntersectionObserver" in window
-  ) {
-
-    const navObserver =
-      new IntersectionObserver(
-        function (entries) {
-
-          entries.forEach(
-            function (entry) {
-
-              if (
-                !entry.isIntersecting
-              ) {
-                return;
-              }
-
-
-              const id =
-                entry.target.id;
-
-
-              navLinks.forEach(
-                function (link) {
-
-                  link.classList.toggle(
-                    "active",
-                    link.getAttribute(
-                      "href"
-                    ) ===
-                    "#" + id
-                  );
-
+                    observer.unobserve(entry.target);
                 }
-              );
 
-            }
-          );
+            });
 
         },
         {
-          rootMargin:
-            "-35% 0px -55% 0px",
-
-          threshold: 0
+            threshold: 0.12
         }
-      );
-
-
-    sections.forEach(
-      function (section) {
-
-        navObserver.observe(
-          section
-        );
-
-      }
     );
 
-  }
+    revealElements.forEach(element => {
+        revealObserver.observe(element);
+    });
 
 
-  /* ================= CARD TILT ================= */
+    /* =========================
+       ACTIVE NAVIGATION
+    ========================= */
 
-  if (
-    !reducedMotion &&
-    window.matchMedia(
-      "(pointer:fine)"
-    ).matches
-  ) {
+    const sections = document.querySelectorAll("section[id]");
+    const navLinks = document.querySelectorAll(".nav a");
 
-    document
-      .querySelectorAll(
-        ".interactive-card"
-      )
-      .forEach(
-        function (card) {
+    const sectionObserver = new IntersectionObserver(
+        entries => {
 
-          card.addEventListener(
-            "pointermove",
-            function (event) {
+            entries.forEach(entry => {
 
-              const rect =
-                card.getBoundingClientRect();
+                if (entry.isIntersecting) {
 
+                    const id = entry.target.getAttribute("id");
 
-              const x =
-                (
-                  event.clientX -
-                  rect.left
-                ) /
-                rect.width -
-                .5;
+                    navLinks.forEach(link => {
+                        link.classList.remove("active");
 
+                        if (link.getAttribute("href") === `#${id}`) {
+                            link.classList.add("active");
+                        }
+                    });
+                }
 
-              const y =
-                (
-                  event.clientY -
-                  rect.top
-                ) /
-                rect.height -
-                .5;
+            });
 
-
-              const rotateX =
-                -y * 3.5;
-
-              const rotateY =
-                x * 3.5;
-
-
-              card.style.transform =
-                "perspective(900px) " +
-                "rotateX(" +
-                rotateX +
-                "deg) " +
-                "rotateY(" +
-                rotateY +
-                "deg) " +
-                "translateY(-3px)";
-
-
-              card.style.setProperty(
-                "--mouse-x",
-                (
-                  event.clientX -
-                  rect.left
-                ) + "px"
-              );
-
-
-              card.style.setProperty(
-                "--mouse-y",
-                (
-                  event.clientY -
-                  rect.top
-                ) + "px"
-              );
-
-            }
-          );
-
-
-          card.addEventListener(
-            "pointerleave",
-            function () {
-
-              card.style.transform =
-                "";
-
-            }
-          );
-
+        },
+        {
+            rootMargin: "-35% 0px -55% 0px"
         }
-      );
+    );
 
-  }
-
-
-  /* ================= MAGNETIC ELEMENTS ================= */
-
-  if (
-    !reducedMotion &&
-    window.matchMedia(
-      "(pointer:fine)"
-    ).matches
-  ) {
-
-    document
-      .querySelectorAll(
-        ".magnetic"
-      )
-      .forEach(
-        function (element) {
-
-          element.addEventListener(
-            "pointermove",
-            function (event) {
-
-              const rect =
-                element.getBoundingClientRect();
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
 
 
-              const x =
-                event.clientX -
-                rect.left -
-                rect.width / 2;
+    /* =========================
+       SMOOTH ANCHOR SCROLL
+    ========================= */
 
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
 
-              const y =
-                event.clientY -
-                rect.top -
-                rect.height / 2;
+        link.addEventListener("click", event => {
 
+            const targetId = link.getAttribute("href");
 
-              element.style.transform =
-                "translate(" +
-                x * .055 +
-                "px," +
-                y * .055 +
-                "px)";
-
-            }
-          );
-
-
-          element.addEventListener(
-            "pointerleave",
-            function () {
-
-              element.style.transform =
-                "";
-
-            }
-          );
-
-        }
-      );
-
-  }
-
-
-  /* ================= SMOOTH ANCHORS ================= */
-
-  document
-    .querySelectorAll(
-      'a[href^="#"]'
-    )
-    .forEach(
-      function (link) {
-
-        link.addEventListener(
-          "click",
-          function (event) {
-
-            const id =
-              link.getAttribute(
-                "href"
-              );
-
-            if (
-              !id ||
-              id === "#"
-            ) {
-              return;
+            if (targetId === "#") {
+                return;
             }
 
-
-            const target =
-              document.querySelector(
-                id
-              );
-
+            const target = document.querySelector(targetId);
 
             if (!target) {
-              return;
+                return;
             }
-
 
             event.preventDefault();
 
-
-            const headerOffset =
-              82;
-
+            const headerHeight = header
+                ? header.offsetHeight
+                : 0;
 
             const targetPosition =
-              target.getBoundingClientRect()
-                .top +
-              window.scrollY -
-              headerOffset;
+                target.getBoundingClientRect().top +
+                window.scrollY -
+                headerHeight;
+
+            window.scrollTo({
+                top: targetPosition,
+                behavior: "smooth"
+            });
+
+        });
+
+    });
 
 
-            window.scrollTo(
-              {
-                top:
-                  targetPosition,
+    /* =========================
+       HERO IMAGE EFFECT
+    ========================= */
 
-                behavior:
-                  reducedMotion
-                    ? "auto"
-                    : "smooth"
-              }
-            );
+    const heroVisual = document.querySelector(".hero-visual");
+    const profileWrapper = document.querySelector(".profile-wrapper");
 
-          }
-        );
+    if (heroVisual && profileWrapper) {
 
-      }
+        heroVisual.addEventListener("mousemove", event => {
+
+            const rect = heroVisual.getBoundingClientRect();
+
+            const x =
+                (event.clientX - rect.left) /
+                rect.width -
+                0.5;
+
+            const y =
+                (event.clientY - rect.top) /
+                rect.height -
+                0.5;
+
+            const rotateY = x * 8;
+            const rotateX = y * -8;
+
+            profileWrapper.style.transform =
+                `translate(-50%, -50%) perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        heroVisual.addEventListener("mouseleave", () => {
+
+            profileWrapper.style.transform =
+                "translate(-50%, -50%) perspective(800px) rotateX(0deg) rotateY(0deg)";
+        });
+    }
+
+
+    /* =========================
+       FLOATING HERO ELEMENTS
+    ========================= */
+
+    const floatingElements = document.querySelectorAll(
+        ".floating-card, .data-node"
     );
 
+    if (heroVisual && floatingElements.length) {
 
-  /* ================= RESIZE ================= */
+        heroVisual.addEventListener("mousemove", event => {
 
-  window.addEventListener(
-    "resize",
-    function () {
+            const rect = heroVisual.getBoundingClientRect();
 
-      if (
-        window.innerWidth > 860 &&
-        mobileMenu &&
-        mobileMenu.classList.contains(
-          "open"
-        )
-      ) {
+            const x =
+                (event.clientX - rect.left) /
+                rect.width -
+                0.5;
 
-        mobileMenu.classList.remove(
-          "open"
-        );
+            const y =
+                (event.clientY - rect.top) /
+                rect.height -
+                0.5;
 
-        navToggle.classList.remove(
-          "open"
-        );
+            floatingElements.forEach((element, index) => {
 
-        navToggle.setAttribute(
-          "aria-expanded",
-          "false"
-        );
+                const strength = 8 + (index % 3) * 4;
 
-      }
+                element.style.transform =
+                    `translate(${x * strength}px, ${y * strength}px)`;
+            });
 
+        });
+
+        heroVisual.addEventListener("mouseleave", () => {
+
+            floatingElements.forEach(element => {
+                element.style.transform = "translate(0, 0)";
+            });
+
+        });
     }
-  );
 
-})();
+
+    /* =========================
+       RESIZE
+    ========================= */
+
+    window.addEventListener("resize", () => {
+
+        if (window.innerWidth > 800) {
+            nav.classList.remove("open");
+        }
+
+    });
+
+});
