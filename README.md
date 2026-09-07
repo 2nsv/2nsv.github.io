@@ -1,6 +1,6 @@
 # Anas Ahmed — Data Engineer Portfolio
 
-A static, dark, technical personal portfolio built with plain HTML, CSS, and JavaScript. Designed to be hosted on GitHub Pages at `anasahmed.github.io`.
+A static, dark, technical personal portfolio built with plain HTML, CSS, and JavaScript. Designed to be hosted on GitHub Pages at `2nsv.github.io`.
 
 ## Structure
 
